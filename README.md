@@ -1,6 +1,51 @@
-# Reel Recall v0.4.2
+# Reel Recall v0.5.0
 
 Production-oriented static web game with all 54 local MP3 files imported and normalized.
+
+## Game Session Controls
+
+### Next Round
+**Next Round** advances the existing game to another random unused track from the selected era.
+
+It preserves:
+- contestant/team scores
+- contestant/team names
+- game mode
+- era selection
+- clip and scoring settings
+- used-song history, so tracks do not repeat until the eligible pool is exhausted
+
+Keyboard shortcut: `N`
+
+### New Game
+**New Game** starts a fresh game session and is confirmation-protected to prevent an accidental reset.
+
+It resets:
+- all scores to zero
+- the round counter to zero
+- the current song/round
+- used-song history
+
+It intentionally preserves:
+- contestant/team names and count
+- team/player setting
+- game mode
+- era selection
+- clip length
+- score increment
+
+Keyboard shortcut: `G`
+
+## v0.5.0 Release Notes
+
+- Added distinct **New Game** and **Next Round** workflows.
+- Added confirmation protection for **New Game**.
+- **Next Round** now clearly means advance within the current game without resetting scores.
+- Added `G` keyboard shortcut for New Game and retained `N` for Next Round.
+- Synchronized semantic versioning across `public/index.html`, `README.md`, `package.json`, and `public/data/playlist.yaml`.
+- Preserved the v0.4.3 fullscreen-safe perimeter buffer.
+- No audio files, track mappings, Wrangler configuration, or Cloudflare deployment structure were changed.
+
 
 ## Library
 - 1980s: 20 tracks
