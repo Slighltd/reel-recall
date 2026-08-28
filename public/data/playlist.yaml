@@ -1,6 +1,6 @@
 playlist:
   title: Reel Recall
-  version: 0.4.1
+  version: 0.5.0
   track_count: 54
   description: Movie-associated songs for Reel Recall. Local audio imported and normalized.
   audio_base_path: audio/
