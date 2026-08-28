@@ -1,4 +1,4 @@
-# Reel Recall v0.5.0
+# Reel Recall v0.6.0
 
 Production-oriented static web game with all 54 local MP3 files imported and normalized.
 
@@ -35,6 +35,71 @@ It intentionally preserves:
 - score increment
 
 Keyboard shortcut: `G`
+
+## Player Display
+
+Reel Recall now includes a separate player/team-facing display at `public/player.html`.
+
+From the host interface, select **Player Display** to open the display in a separate browser window. The host can move that window to a TV, projector, or second monitor while retaining all controls privately on the host screen.
+
+The Player Display mirrors only the live round stage:
+
+- round era and round status
+- current prompt
+- clue/song/film information appropriate to the active game mode
+- artist/context line
+- clip progress and timer
+- playback state
+- answer reveal
+
+The Player Display intentionally does **not** show:
+
+- contestant/team scores
+- Settings
+- Mode Selection
+- Era Selection
+- Song Selection
+- New Game / Next Round controls
+- Reveal / Replay controls
+
+Audio continues to play from the **host window only**. The player-facing display mirrors playback status and progress without starting a second audio stream, preventing echo or duplicated playback.
+
+### Display synchronization
+
+The host and player windows synchronize over the same Cloudflare origin using `BroadcastChannel`, with `localStorage` and `window.postMessage` fallbacks.
+
+The Player Display receives the current state immediately when opened and continues updating during playback, pause, round changes, mode changes, answer reveal, and New Game resets.
+
+Player Display convenience controls:
+
+- `F` toggles fullscreen from the player window
+- double-clicking the player stage also toggles fullscreen
+
+Host shortcut:
+
+- `D` opens/focuses the Player Display
+
+## v0.6.0 Release Notes
+
+- Added a dedicated **Player Display** pop-out window.
+- Added `public/player.html` as the player/team-facing stage.
+- Added live same-origin synchronization between host and player displays.
+- Player view mirrors only current-round information and never exposes host settings, song-selection controls, or scores.
+- Player view respects **Name the Movie**, **Name the Song**, and **Double Recall** concealment rules.
+- Answer reveals, playback status, and clip progress are synchronized automatically.
+- Audio remains host-side only to prevent duplicate playback.
+- Added host **Player Display** button and `D` keyboard shortcut.
+- Added `F` / double-click fullscreen support within the player display.
+- Synchronized semantic version references to **v0.6.0**.
+- Preserved all 54 audio tracks, existing track mappings, Cloudflare Wrangler configuration, and fullscreen-safe screen buffer.
+
+## v0.5.1 Release Notes
+
+- Changed the host-strip **Songs** control to the static label **Song Selection**.
+- Removed the active/current song title from the host strip.
+- Prevents accidental answer disclosure in **Name the Song** and **Double Recall** modes.
+- Synchronized the runtime `VERSION` constant and semantic version references to **v0.5.1**.
+- No gameplay logic, audio files, track mappings, Wrangler configuration, or deployment structure were changed.
 
 ## v0.5.0 Release Notes
 
@@ -84,6 +149,7 @@ reel-recall/
 ├── README.md
 └── public/
     ├── index.html
+    ├── player.html
     ├── data/
     └── audio/
 ```
