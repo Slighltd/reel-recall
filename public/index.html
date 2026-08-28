@@ -25,10 +25,17 @@
   --line:rgba(255,255,255,.18);
   --shadow:0 16px 42px rgba(0,0,0,.42);
   --radius:20px;
+  --screen-buffer:clamp(10px,1vw,18px);
 }
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:#090b27;color:var(--white);font-family:Arial,Helvetica,sans-serif}
 body{
+  min-height:100vh;
+  padding:
+    max(var(--screen-buffer),env(safe-area-inset-top))
+    max(var(--screen-buffer),env(safe-area-inset-right))
+    max(var(--screen-buffer),env(safe-area-inset-bottom))
+    max(var(--screen-buffer),env(safe-area-inset-left));
   background:
     radial-gradient(circle at 12% 5%,rgba(231,46,165,.24),transparent 28%),
     radial-gradient(circle at 86% 4%,rgba(42,102,255,.27),transparent 31%),
@@ -39,10 +46,10 @@ button{cursor:pointer}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--cream);outline-offset:3px}
 button:disabled{cursor:not-allowed;opacity:.42}
 .app{
-  width:min(98vw,1900px);
-  min-height:100vh;
+  width:min(100%,1900px);
+  min-height:calc(100vh - (var(--screen-buffer) * 2));
   margin:0 auto;
-  padding:12px 0 8px;
+  padding:0 0 8px;
   display:flex;
   flex-direction:column;
   gap:12px;
@@ -662,7 +669,8 @@ button:disabled{cursor:not-allowed;opacity:.42}
   .contestant{min-height:165px}
 }
 @media(max-width:760px){
-  .app{width:98vw;padding-top:6px}
+  :root{--screen-buffer:8px}
+  .app{width:100%;padding-top:0}
   .marquee{padding:8px;border-radius:18px}
   .marquee-inner{min-height:84px;padding:13px 10px;border-width:3px}
   .brand h1{font-size:52px}
@@ -762,7 +770,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   </main>
 
   <footer class="footer">
-    <span>Reel Recall <b>v0.4.2</b></span>
+    <span>Reel Recall <b>v0.4.3</b></span>
     <span><b id="footerTracks">54</b> Tracks</span>
     <span>Round <b id="footerRound">0</b></span>
     <span>Mode <b id="footerMode">Name Movie</b></span>
