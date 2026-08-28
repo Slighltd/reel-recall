@@ -132,7 +132,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 .host-strip{
   flex:0 0 auto;
   display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr)) auto;
+  grid-template-columns:repeat(5,minmax(0,1fr)) auto;
   gap:8px;
 }
 .host-btn,.action-btn,.score-btn,.modal-btn{
@@ -725,10 +725,11 @@ button:disabled{cursor:not-allowed;opacity:.42}
   </header>
 
   <nav class="host-strip" aria-label="Host controls">
-    <button class="host-btn" id="songsBtn">Songs <span id="songSelectionLabel">Random</span></button>
+    <button class="host-btn" id="songsBtn">Song Selection</button>
     <button class="host-btn" id="settingsBtn">Settings <span id="contestantSummary">2 Teams</span></button>
     <button class="host-btn" id="modeBtn">Mode <span id="modeSummary">Name Movie</span></button>
     <button class="host-btn" id="eraBtn">Era <span id="eraSummary">All Eras</span></button>
+    <button class="host-btn" id="playerDisplayBtn">Player Display</button>
     <button class="host-btn primary full-btn" id="fullBtn">Fullscreen</button>
   </nav>
 
@@ -777,7 +778,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   </main>
 
   <footer class="footer">
-    <span>Reel Recall <b>v0.5.0</b></span>
+    <span>Reel Recall <b>v0.6.0</b></span>
     <span><b id="footerTracks">54</b> Tracks</span>
     <span>Round <b id="footerRound">0</b></span>
     <span>Mode <b id="footerMode">Name Movie</b></span>
@@ -933,7 +934,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 <script>
 (()=>{
 "use strict";
-const VERSION="0.4.1";
+const VERSION="0.6.0";
 const TRACKS=Array.isArray(window.REEL_RECALL_TRACKS)?window.REEL_RECALL_TRACKS:[];
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
@@ -959,6 +960,12 @@ let clipTimeout=null;
 let clipStartPerf=0;
 let elapsed=0;
 let playback="idle";
+
+const DISPLAY_CHANNEL_NAME="reel-recall-player-display-v1";
+const DISPLAY_STORAGE_KEY="reel_recall_player_display_state";
+let displayChannel=null;
+let playerDisplayWindow=null;
+let lastDisplayPublish=0;
 
 function loadSettings(){
   try{
@@ -988,6 +995,72 @@ function openModal(id){
 function closeModal(id){$("#"+id)?.classList.remove("open")}
 function closeAll(){$$(".modal-backdrop.open").forEach(m=>m.classList.remove("open"))}
 
+function playerDisplaySnapshot(){
+  const clue=$("#clue");
+  const answer=$("#answer");
+  return {
+    type:"state",
+    version:VERSION,
+    timestamp:Date.now(),
+    hasTrack:Boolean(current),
+    round,
+    roundEra:$("#roundEra")?.textContent||"Ready",
+    roundStatus:$("#roundStatus")?.textContent||"Choose Next Round",
+    prompt:$("#prompt")?.textContent||"Press Next Round to begin",
+    clue:clue?.textContent||"Reel Recall",
+    clueHidden:Boolean(clue?.classList.contains("hidden")),
+    artist:$("#artist")?.textContent||"Movie music challenge",
+    clipLabel:$("#clipLabel")?.textContent||`${settings.clipLength} second clip`,
+    progressPct:Math.max(0,Math.min(100,parseFloat($("#progressFill")?.style.width)||0)),
+    timer:$("#timer")?.textContent||"0.0s",
+    audioState:$("#audioState")?.textContent||"No Track",
+    playback,
+    answerVisible:Boolean(answer?.classList.contains("show")),
+    answerFilm:current?.film||"",
+    answerYear:current?.year||"",
+    answerSong:current?`${current.song} · ${current.artist}`:""
+  };
+}
+function publishPlayerDisplay(force=false){
+  const now=performance.now();
+  if(!force && now-lastDisplayPublish<150)return;
+  lastDisplayPublish=now;
+  const state=playerDisplaySnapshot();
+
+  try{localStorage.setItem(DISPLAY_STORAGE_KEY,JSON.stringify(state))}catch(e){}
+  try{displayChannel?.postMessage(state)}catch(e){}
+}
+function initPlayerDisplaySync(){
+  try{
+    if("BroadcastChannel" in window){
+      displayChannel=new BroadcastChannel(DISPLAY_CHANNEL_NAME);
+      displayChannel.addEventListener("message",event=>{
+        if(event.data?.type==="request-state")publishPlayerDisplay(true);
+      });
+    }
+  }catch(e){displayChannel=null}
+
+  window.addEventListener("message",event=>{
+    if(event.origin!==location.origin)return;
+    if(event.data?.type==="request-state"){
+      publishPlayerDisplay(true);
+      try{event.source?.postMessage(playerDisplaySnapshot(),location.origin)}catch(e){}
+    }
+  });
+}
+function openPlayerDisplay(){
+  const features="popup=yes,width=1280,height=720,resizable=yes,scrollbars=no";
+  const nextWindow=window.open("player.html","reelRecallPlayerDisplay",features);
+  if(!nextWindow){
+    alert("The player display window was blocked by the browser. Allow pop-ups for Reel Recall and try again.");
+    return;
+  }
+  playerDisplayWindow=nextWindow;
+  try{playerDisplayWindow.focus()}catch(e){}
+  setTimeout(()=>publishPlayerDisplay(true),200);
+  setTimeout(()=>publishPlayerDisplay(true),750);
+}
+
 function renderHeaderState(){
   $("#contestantSummary").textContent=contestantLabel();
   $("#modeSummary").textContent=modeLabel(settings.mode);
@@ -996,6 +1069,7 @@ function renderHeaderState(){
   $("#footerMode").textContent=modeLabel(settings.mode);
   $("#footerEra").textContent=settings.era==="all"?"All":settings.era;
   $("#clipLabel").textContent=`${settings.clipLength} second clip`;
+  publishPlayerDisplay(true);
 }
 function renderContestants(){
   const holder=$("#contestants");
@@ -1075,7 +1149,6 @@ function startNewGame(){
   audio.load();
 
   $("#footerRound").textContent="0";
-  $("#songSelectionLabel").textContent="Random";
   $("#roundEra").textContent="Ready";
   $("#roundStatus").textContent="Choose Next Round";
   $("#prompt").textContent="Press Next Round to begin";
@@ -1094,6 +1167,7 @@ function startNewGame(){
   renderContestants();
   renderSongList();
   closeModal("newGameModal");
+  publishPlayerDisplay(true);
 }
 function applyRoundPresentation(){
   if(!current)return;
@@ -1117,6 +1191,7 @@ function applyRoundPresentation(){
   }
   $("#answerFilm").innerHTML=`${esc(current.film)} <span class="answer-year">(${current.year})</span>`;
   $("#answerSong").textContent=`${current.song} · ${current.artist}`;
+  publishPlayerDisplay(true);
 }
 function loadRound(track,autoplay){
   stopAudio(true);
@@ -1124,7 +1199,6 @@ function loadRound(track,autoplay){
   round++;
   used.add(track.id);
   $("#footerRound").textContent=round;
-  $("#songSelectionLabel").textContent=track.song;
   $("#revealBtn").disabled=false;
   $("#replayBtn").disabled=false;
   $("#roundStatus").textContent="Round Ready";
@@ -1132,6 +1206,7 @@ function loadRound(track,autoplay){
   configureAudio();
   renderSongList();
   closeAll();
+  publishPlayerDisplay(true);
   if(autoplay)setTimeout(()=>playClip(true),80);
 }
 function configureAudio(){
@@ -1160,6 +1235,7 @@ function setAudioState(state,label){
   else if(state==="ended"){btn.disabled=false;btn.textContent="Replay Song"}
   else if(state==="error"){btn.disabled=false;btn.textContent="Try Again"}
   else{btn.disabled=false;btn.textContent="Play Song"}
+  publishPlayerDisplay(true);
 }
 function playClip(restart){
   if(!current)return;
@@ -1175,6 +1251,7 @@ function playClip(restart){
   }
   setAudioState("playing","Playing");
   $("#roundStatus").textContent="Music Playing";
+  publishPlayerDisplay(true);
   timerId=setInterval(updateProgress,100);
   clipTimeout=setTimeout(endClip,Math.max(0,settings.clipLength-elapsed)*1000);
 }
@@ -1187,6 +1264,7 @@ function pauseAudio(){
   updateProgress(true);
   setAudioState("paused","Paused");
   $("#roundStatus").textContent="Music Paused";
+  publishPlayerDisplay(true);
 }
 function endClip(){
   elapsed=settings.clipLength;
@@ -1196,6 +1274,7 @@ function endClip(){
   updateProgress(true);
   setAudioState("ended","Clip Ended");
   $("#roundStatus").textContent="Clip Complete";
+  publishPlayerDisplay(true);
 }
 function stopAudio(reset){
   clearTimeout(clipTimeout);clipTimeout=null;
@@ -1222,6 +1301,7 @@ function updateProgress(force){
   if(playback==="playing"&&!force)value=Math.min(settings.clipLength,(performance.now()-clipStartPerf)/1000);
   $("#progressFill").style.width=`${Math.max(0,Math.min(100,value/settings.clipLength*100))}%`;
   $("#timer").textContent=`${value.toFixed(1)}s`;
+  publishPlayerDisplay(false);
 }
 function resetProgress(){
   $("#progressFill").style.width="0%";
@@ -1236,6 +1316,7 @@ function reveal(){
     $("#artist").textContent=current.artist;
   }
   $("#roundStatus").textContent="Answer Revealed";
+  publishPlayerDisplay(true);
 }
 function changeScore(index,dir){
   scores[index]+=settings.scoreStep*dir;
@@ -1289,6 +1370,7 @@ function bind(){
   $("#settingsBtn").addEventListener("click",()=>{initSettingsModal();openModal("settingsModal")});
   $("#modeBtn").addEventListener("click",()=>{pendingMode=settings.mode;renderModeChoices();openModal("modeModal")});
   $("#eraBtn").addEventListener("click",()=>{pendingEra=settings.era;renderEraChoices();openModal("eraModal")});
+  $("#playerDisplayBtn").addEventListener("click",openPlayerDisplay);
   $("#fullBtn").addEventListener("click",()=>{
     document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
   });
@@ -1341,6 +1423,7 @@ function bind(){
     if(e.key==="Escape")closeAll();
     if(e.code==="Space"){e.preventDefault();togglePlay()}
     if(e.key.toLowerCase()==="g")openModal("newGameModal");
+    if(e.key.toLowerCase()==="d")openPlayerDisplay();
     if(e.key.toLowerCase()==="n")chooseRandom();
     if(e.key.toLowerCase()==="r")reveal();
     if(e.key.toLowerCase()==="s")openModal("songsModal");
@@ -1348,6 +1431,7 @@ function bind(){
 }
 
 function init(){
+  initPlayerDisplaySync();
   renderHeaderState();
   renderContestants();
   renderSongList();

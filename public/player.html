@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101e64">
+<title>Reel Recall | Player Display v0.6.0</title>
+<style>
+:root{
+  --navy:#071743;
+  --blue:#173e9f;
+  --purple:#741d70;
+  --gold:#f4d267;
+  --cream:#fff1ae;
+  --white:#fffdf4;
+  --muted:#dfe7ff;
+  --cyan:#76e8ff;
+  --good:#a7ffb6;
+  --bad:#ffd0d0;
+  --screen-buffer:clamp(10px,1vw,18px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080a24;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+body{
+  min-height:100vh;
+  padding:
+    max(var(--screen-buffer),env(safe-area-inset-top))
+    max(var(--screen-buffer),env(safe-area-inset-right))
+    max(var(--screen-buffer),env(safe-area-inset-bottom))
+    max(var(--screen-buffer),env(safe-area-inset-left));
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 12% 5%,rgba(231,46,165,.23),transparent 28%),
+    radial-gradient(circle at 86% 4%,rgba(42,102,255,.27),transparent 31%),
+    linear-gradient(145deg,#080a24 0%,#1a1050 45%,#071440 100%);
+}
+.display{
+  width:100%;
+  height:calc(100vh - (var(--screen-buffer) * 2));
+  min-height:420px;
+  overflow:hidden;
+  border:5px solid #c79123;
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 50% 11%,rgba(73,145,255,.46),transparent 40%),
+    linear-gradient(180deg,#173e9f 0%,#0d286f 55%,#071743 100%);
+  box-shadow:0 16px 42px rgba(0,0,0,.42);
+  position:relative;
+}
+.display::before,.display::after{
+  content:"";
+  position:absolute;top:0;bottom:0;width:18%;
+  opacity:.34;pointer-events:none
+}
+.display::before{
+  left:0;
+  background:linear-gradient(135deg,rgba(239,55,164,.68),transparent 72%);
+  clip-path:polygon(0 0,100% 27%,43% 100%,0 100%)
+}
+.display::after{
+  right:0;
+  background:linear-gradient(225deg,rgba(84,224,255,.55),transparent 72%);
+  clip-path:polygon(100% 0,0 27%,57% 100%,100% 100%)
+}
+.round{
+  position:relative;z-index:1;
+  width:100%;height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:clamp(70px,8vh,110px) clamp(18px,3vw,52px) clamp(30px,5vh,60px)
+}
+.round-meta{
+  position:absolute;
+  left:clamp(13px,2vw,28px);right:clamp(13px,2vw,28px);top:clamp(12px,2vh,23px);
+  display:flex;justify-content:space-between;gap:10px;
+  color:var(--muted);
+  font-size:clamp(10px,1vw,17px);
+  font-weight:900;letter-spacing:.11em;text-transform:uppercase
+}
+.round-meta span{
+  padding:7px 12px;
+  border:1px solid rgba(255,255,255,.3);
+  border-radius:999px;
+  background:rgba(5,15,58,.62)
+}
+.prompt{
+  margin-bottom:clamp(13px,2vh,22px);
+  padding:8px 20px;
+  border:3px solid #efbb3d;
+  border-radius:999px;
+  background:#741d70;
+  color:var(--cream);
+  font-size:clamp(12px,1.2vw,21px);
+  font-weight:900;text-transform:uppercase;letter-spacing:.17em;
+  box-shadow:0 4px 0 #340c33
+}
+.clue{
+  width:min(1180px,96%);
+  padding:clamp(20px,3vh,38px) clamp(14px,2.5vw,38px);
+  border:5px solid var(--gold);
+  border-radius:17px;
+  background:linear-gradient(180deg,#fbfdff,#dae6ff);
+  color:#0a205f;
+  font-family:Impact,"Arial Black",Arial,sans-serif;
+  font-size:clamp(46px,7vw,126px);
+  line-height:.94;
+  letter-spacing:.018em;
+  text-transform:uppercase;
+  text-shadow:0 2px 0 white;
+  box-shadow:inset 0 -8px 0 rgba(40,70,150,.12),0 8px 0 #755005,0 18px 34px rgba(0,0,0,.32)
+}
+.clue.hidden{letter-spacing:.13em;color:#17265e}
+.artist{
+  margin-top:clamp(14px,2vh,25px);
+  font-size:clamp(20px,2.3vw,42px);
+  font-weight:900;text-transform:uppercase;letter-spacing:.055em;
+  color:#fff0a4;text-shadow:0 3px 0 #37104b
+}
+.playback{
+  width:min(1000px,94%);
+  margin-top:clamp(22px,3vh,38px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 150px;
+  gap:16px;
+  align-items:center
+}
+.progress{
+  height:clamp(24px,3vh,36px);
+  overflow:hidden;
+  border:3px solid #c99b35;
+  border-radius:999px;
+  background:#071038;
+  box-shadow:inset 0 3px 8px rgba(0,0,0,.5)
+}
+.progress>div{
+  height:100%;width:0;
+  background:repeating-linear-gradient(90deg,#fff1a2 0 18px,#e6ad28 18px 27px);
+  transition:width .12s linear
+}
+.progress-meta{
+  display:flex;justify-content:space-between;gap:8px;
+  margin-top:7px;
+  color:#e3e8fb;
+  font-size:clamp(10px,.9vw,15px);
+  font-weight:900;letter-spacing:.08em;text-transform:uppercase
+}
+.timer{color:#fff0a2;font:900 clamp(16px,1.6vw,28px) "Courier New",monospace}
+.audio-state{
+  min-width:0;
+  padding:12px 10px;
+  border:2px solid rgba(255,255,255,.32);
+  border-radius:10px;
+  background:rgba(5,15,57,.68);
+  color:#dce5ff;
+  text-align:center;
+  font-size:clamp(10px,.9vw,15px);
+  font-weight:900;letter-spacing:.08em;text-transform:uppercase
+}
+.audio-state.ready{border-color:#69d982;color:var(--good)}
+.audio-state.playing{border-color:#fff0a2;color:#fff0a2}
+.audio-state.error{border-color:#ff8d8d;color:var(--bad)}
+.answer{
+  display:none;
+  width:min(1100px,96%);
+  margin-top:clamp(20px,3vh,36px);
+  padding-top:clamp(17px,2vh,26px);
+  border-top:3px solid rgba(255,225,111,.55)
+}
+.answer.show{display:block;animation:reveal .2s ease-out}
+.answer-film{
+  font-family:Impact,"Arial Black",Arial,sans-serif;
+  font-size:clamp(42px,6vw,105px);
+  line-height:.94;text-transform:uppercase;color:#fff2a7;
+  text-shadow:0 4px 0 #781961,0 7px 0 #290d50
+}
+.answer-song{
+  margin-top:9px;
+  font-size:clamp(18px,2vw,34px);
+  font-weight:900;text-transform:uppercase
+}
+.answer-year{color:var(--cyan)}
+.sync-note{
+  position:absolute;z-index:2;right:16px;bottom:12px;
+  color:rgba(225,233,255,.65);
+  font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase
+}
+@keyframes reveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@media(max-width:760px){
+  :root{--screen-buffer:8px}
+  body{overflow:auto}
+  .display{height:auto;min-height:calc(100vh - 16px)}
+  .round{min-height:calc(100vh - 16px);padding:65px 10px 30px}
+  .round-meta{font-size:8px}
+  .clue{font-size:clamp(36px,11vw,60px);padding:18px 9px}
+  .artist{font-size:18px}
+  .playback{grid-template-columns:1fr}
+  .answer-film{font-size:clamp(34px,10vw,58px)}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="display" id="display">
+  <section class="round">
+    <div class="round-meta">
+      <span id="roundEra">Ready</span>
+      <span id="roundStatus">Waiting for Host</span>
+    </div>
+
+    <div class="prompt" id="prompt">Player Display</div>
+    <div class="clue" id="clue">Reel Recall</div>
+    <div class="artist" id="artist">Waiting for the host game</div>
+
+    <div class="playback">
+      <div>
+        <div class="progress"><div id="progressFill"></div></div>
+        <div class="progress-meta">
+          <span id="clipLabel">Round audio</span>
+          <span class="timer" id="timer">0.0s</span>
+        </div>
+      </div>
+      <div class="audio-state" id="audioState">Waiting</div>
+    </div>
+
+    <div class="answer" id="answer">
+      <div class="answer-film" id="answerFilm"></div>
+      <div class="answer-song" id="answerSong"></div>
+    </div>
+  </section>
+  <div class="sync-note" id="syncNote">Player Display · v0.6.0</div>
+</main>
+
+<script>
+(()=>{
+"use strict";
+const DISPLAY_CHANNEL_NAME="reel-recall-player-display-v1";
+const DISPLAY_STORAGE_KEY="reel_recall_player_display_state";
+const $=s=>document.querySelector(s);
+let channel=null;
+let lastTimestamp=0;
+
+function safeState(raw){
+  if(!raw||raw.type!=="state")return null;
+  return raw;
+}
+function render(state){
+  state=safeState(state);
+  if(!state)return;
+  if(state.timestamp && state.timestamp<lastTimestamp)return;
+  lastTimestamp=state.timestamp||Date.now();
+
+  $("#roundEra").textContent=state.roundEra||"Ready";
+  $("#roundStatus").textContent=state.roundStatus||"Waiting for Host";
+  $("#prompt").textContent=state.prompt||"Player Display";
+  $("#clue").textContent=state.clue||"Reel Recall";
+  $("#clue").className="clue"+(state.clueHidden?" hidden":"");
+  $("#artist").textContent=state.artist||"Waiting for the host game";
+  $("#clipLabel").textContent=state.clipLabel||"Round audio";
+  $("#progressFill").style.width=`${Math.max(0,Math.min(100,Number(state.progressPct)||0))}%`;
+  $("#timer").textContent=state.timer||"0.0s";
+
+  const audio=$("#audioState");
+  audio.className="audio-state";
+  if(["ready","paused","ended"].includes(state.playback))audio.classList.add("ready");
+  if(state.playback==="playing")audio.classList.add("playing");
+  if(state.playback==="error")audio.classList.add("error");
+  audio.textContent=state.audioState||"Waiting";
+
+  $("#answer").classList.toggle("show",Boolean(state.answerVisible));
+  if(state.answerVisible){
+    $("#answerFilm").innerHTML=`${escapeHtml(state.answerFilm||"")} <span class="answer-year">(${escapeHtml(state.answerYear||"")})</span>`;
+    $("#answerSong").textContent=state.answerSong||"";
+  }else{
+    $("#answerFilm").textContent="";
+    $("#answerSong").textContent="";
+  }
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function requestState(){
+  try{channel?.postMessage({type:"request-state"})}catch(e){}
+  try{window.opener?.postMessage({type:"request-state"},location.origin)}catch(e){}
+}
+function readStoredState(){
+  try{
+    const stored=JSON.parse(localStorage.getItem(DISPLAY_STORAGE_KEY)||"null");
+    if(stored)render(stored);
+  }catch(e){}
+}
+function toggleFullscreen(){
+  if(document.fullscreenElement)document.exitFullscreen?.();
+  else document.documentElement.requestFullscreen?.();
+}
+
+readStoredState();
+
+try{
+  if("BroadcastChannel" in window){
+    channel=new BroadcastChannel(DISPLAY_CHANNEL_NAME);
+    channel.addEventListener("message",event=>render(event.data));
+  }
+}catch(e){channel=null}
+
+window.addEventListener("storage",event=>{
+  if(event.key!==DISPLAY_STORAGE_KEY||!event.newValue)return;
+  try{render(JSON.parse(event.newValue))}catch(e){}
+});
+window.addEventListener("message",event=>{
+  if(event.origin!==location.origin)return;
+  render(event.data);
+});
+document.addEventListener("keydown",event=>{
+  if(event.key.toLowerCase()==="f")toggleFullscreen();
+});
+$("#display").addEventListener("dblclick",toggleFullscreen);
+
+requestState();
+setTimeout(requestState,250);
+setTimeout(requestState,900);
+})();
+</script>
+</body>
+</html>
