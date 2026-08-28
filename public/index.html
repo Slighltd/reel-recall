@@ -377,12 +377,18 @@ button:disabled{cursor:not-allowed;opacity:.42}
   flex:0 0 auto;
   padding:10px 12px 12px;
   display:grid;
-  grid-template-columns:1.3fr 1fr 1fr;
+  grid-template-columns:.85fr 1.25fr 1fr 1fr;
   gap:8px;
   border-top:3px solid #c99325;
   background:linear-gradient(180deg,#361657,#190f3c)
 }
 .action-btn{padding:8px 12px;font-size:clamp(11px,.9vw,15px)}
+.action-btn.new-game{
+  border-color:#ef9d69;
+  color:#ffe4cf;
+  background:linear-gradient(180deg,#8f3540,#56202e);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.12),0 3px 0 #32101a
+}
 
 /* ---------- Dynamic contestants ---------- */
 .score-panel{
@@ -757,7 +763,8 @@ button:disabled{cursor:not-allowed;opacity:.42}
       </div>
 
       <div class="stage-controls">
-        <button class="action-btn primary" id="nextBtn">Next Random Round</button>
+        <button class="action-btn new-game" id="newGameBtn">New Game</button>
+        <button class="action-btn primary" id="nextBtn">Next Round</button>
         <button class="action-btn" id="revealBtn" disabled>Reveal Answer</button>
         <button class="action-btn" id="replayBtn" disabled>Replay Clip</button>
       </div>
@@ -770,7 +777,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   </main>
 
   <footer class="footer">
-    <span>Reel Recall <b>v0.4.3</b></span>
+    <span>Reel Recall <b>v0.5.0</b></span>
     <span><b id="footerTracks">54</b> Tracks</span>
     <span>Round <b id="footerRound">0</b></span>
     <span>Mode <b id="footerMode">Name Movie</b></span>
@@ -897,6 +904,26 @@ button:disabled{cursor:not-allowed;opacity:.42}
         </select>
       </div>
       <div class="song-list" id="songList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- New Game Confirmation -->
+<div class="modal-backdrop" id="newGameModal">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="newGameTitle">
+    <div class="modal-head">
+      <h2 id="newGameTitle">Start a New Game?</h2>
+      <button class="close-btn" data-close="newGameModal" aria-label="Cancel new game">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin:0;color:#d9e1f8;line-height:1.65;font-weight:800">
+        This resets the current scores, round counter, used-song history, and active track.
+        Your contestant names, game mode, era, clip length, and other setup choices will be preserved.
+      </p>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn" data-close="newGameModal">Cancel</button>
+      <button class="modal-btn primary" id="confirmNewGameBtn">Start New Game</button>
     </div>
   </section>
 </div>
@@ -1033,6 +1060,40 @@ function chooseRandom(){
   const t=available[Math.floor(Math.random()*available.length)];
   used.add(t.id);
   loadRound(t,false);
+}
+function startNewGame(){
+  stopAudio(true);
+
+  current=null;
+  round=0;
+  used.clear();
+  scores=Array(6).fill(0);
+
+  const audio=$("#audio");
+  audio.pause();
+  audio.removeAttribute("src");
+  audio.load();
+
+  $("#footerRound").textContent="0";
+  $("#songSelectionLabel").textContent="Random";
+  $("#roundEra").textContent="Ready";
+  $("#roundStatus").textContent="Choose Next Round";
+  $("#prompt").textContent="Press Next Round to begin";
+  $("#clue").className="clue";
+  $("#clue").textContent="Reel Recall";
+  $("#artist").textContent="Movie music challenge";
+  $("#answer").classList.remove("show");
+  $("#answerFilm").textContent="";
+  $("#answerSong").textContent="";
+  $("#revealBtn").disabled=true;
+  $("#replayBtn").disabled=true;
+
+  elapsed=0;
+  resetProgress();
+  setAudioState("idle","No Track");
+  renderContestants();
+  renderSongList();
+  closeModal("newGameModal");
 }
 function applyRoundPresentation(){
   if(!current)return;
@@ -1260,6 +1321,8 @@ function bind(){
     }
   });
 
+  $("#newGameBtn").addEventListener("click",()=>openModal("newGameModal"));
+  $("#confirmNewGameBtn").addEventListener("click",startNewGame);
   $("#nextBtn").addEventListener("click",chooseRandom);
   $("#playBtn").addEventListener("click",togglePlay);
   $("#replayBtn").addEventListener("click",replayClip);
@@ -1277,6 +1340,7 @@ function bind(){
     if(tag==="INPUT"||tag==="SELECT")return;
     if(e.key==="Escape")closeAll();
     if(e.code==="Space"){e.preventDefault();togglePlay()}
+    if(e.key.toLowerCase()==="g")openModal("newGameModal");
     if(e.key.toLowerCase()==="n")chooseRandom();
     if(e.key.toLowerCase()==="r")reveal();
     if(e.key.toLowerCase()==="s")openModal("songsModal");
