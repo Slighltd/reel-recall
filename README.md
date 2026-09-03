@@ -1,4 +1,4 @@
-# Reel Recall v0.6.0
+# Reel Recall v0.8.1
 
 Production-oriented static web game with all 54 local MP3 files imported and normalized.
 
@@ -50,11 +50,11 @@ The Player Display mirrors only the live round stage:
 - artist/context line
 - clip progress and timer
 - playback state
+- live contestant/team score strip
 - answer reveal
 
 The Player Display intentionally does **not** show:
 
-- contestant/team scores
 - Settings
 - Mode Selection
 - Era Selection
@@ -78,6 +78,116 @@ Player Display convenience controls:
 Host shortcut:
 
 - `D` opens/focuses the Player Display
+
+## v0.8.1 Release Notes
+
+- Added **Tokyo Drift (Fast & Furious)** by **Teriyaki Boyz** from *The Fast and the Furious: Tokyo Drift* (2006).
+- Added the track to the **2000s+** pool.
+- Standardized the source audio filename as `audio/tokyo-drift-tokyo-drift-fast-and-furious.mp3`.
+- Updated the complete Reel Recall library from **120 to 121 tracks**.
+- Updated `tracks.js`, `playlist.yaml`, and `audio-import.csv`.
+- Synchronized semantic version references to **v0.8.1**.
+- No gameplay, Disney-theme logic, Player Display behavior, or Wrangler configuration was changed.
+
+## v0.8.0 Release Notes
+
+### Expanded music library
+Imported and normalized **66 new MP3 files** from the supplied update packages:
+
+- 1980s Update: 10 tracks
+- 1990s Update: 14 tracks
+- 2000s+ Update: 13 tracks
+- Disney Update: 29 tracks
+
+The complete Reel Recall library now contains **120 tracks**.
+
+All imported audio was renamed to the established convention:
+
+`audio/<track-id>.mp3`
+
+The complete original-to-site filename mapping is recorded in `public/data/audio-import.csv`.
+
+### Disney theme
+**Disney** is now available in the existing Era selector and the Song Selection filter.
+
+Disney is implemented as a theme rather than replacing chronological era metadata. A Disney track can therefore belong to both:
+
+- its chronological era, such as `1990s`
+- the `Disney` theme
+
+This allows the normal decade games to retain Disney songs while also providing a dedicated Disney-only game.
+
+The Disney pool contains:
+- all 29 tracks from the new Disney package
+- existing Reel Recall songs from Toy Story, Aladdin, Beauty and the Beast, The Lion King, Pocahontas, Mulan, Tarzan, A Goofy Movie, and Cars
+
+Current Disney theme pool: **45 tracks**.
+
+Disney films released before 1980 retain `Pre-1980` as chronological metadata. They are available through **All Eras** and **Disney**, but no separate Pre-1980 button has been added.
+
+### Data model
+Track records now support a `themes` array:
+
+```json
+{
+  "era": "1990s",
+  "themes": ["Disney"]
+}
+```
+
+This keeps era and theme selection additive and makes future themed pools possible without duplicating tracks or audio files.
+
+### Semantic version
+Updated to **v0.8.0** across the host interface, Player Display, README, `package.json`, and playlist manifest.
+
+Cloudflare/Wrangler configuration and all existing v0.7.0 gameplay features remain unchanged.
+
+## v0.7.0 Release Notes
+
+### Host answer key
+The host stage now always shows a compact private answer key containing the **song, artist, and movie** for the loaded round. This information is never transmitted to the Player Display unless the answer is formally revealed.
+
+### Five-second answer timer
+A new **Start 5s Timer** host control is available whenever a round is loaded.
+
+- If the music is currently playing, starting the answer timer automatically pauses it.
+- The Player Display shows only a large floating `5 → 4 → 3 → 2 → 1 → 0` countdown.
+- Pressing the timer button again while active resets it to five seconds.
+- Resuming/replaying the song, changing rounds, revealing the answer, or starting a New Game clears the answer timer.
+- Host shortcut: `T`.
+
+### Clip lengths
+Available clip-duration settings are now:
+
+- 5 seconds
+- 10 seconds
+- 15 seconds
+- 20 seconds
+- 30 seconds
+- 45 seconds
+- 60 seconds
+
+### Player score header
+The Player Display now includes a small live score strip showing the active team/player names and current scores. Score and name changes made on the host are synchronized immediately.
+
+### Pause/resume behavior
+Paused music now resumes from the actual audio position where it was stopped rather than calculating a new start from the beginning of the clip.
+
+### Previous Track
+A new **Previous Track** control lets the host move backward through the current game's round history.
+
+- Returning to a previous round does not reset scores.
+- **Next Round** moves forward through existing history first, then selects a new random unused track.
+- New Game clears round history.
+- Host shortcut: `P`.
+
+### Viewport-fit refactor
+The host and player game surfaces are now explicitly bounded to the available browser viewport.
+
+- Main game screens use no page-level scrolling.
+- Header, controls, stage, scoreboard, footer, and player display scale vertically as well as horizontally.
+- Narrow screens use compact multi-row controls and a compressed horizontal scoreboard.
+- Configuration overlays may still scroll internally when necessary; the active game surface does not.
 
 ## v0.6.0 Release Notes
 
