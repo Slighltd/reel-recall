@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101e64">
-<title>Reel Recall | Player Display v0.6.0</title>
+<title>Reel Recall | Player Display v0.8.1</title>
 <style>
 :root{
   --navy:#071743;
@@ -20,9 +20,18 @@
   --screen-buffer:clamp(10px,1vw,18px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#080a24;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  min-height:0;
+  overflow:hidden;
+  background:#080a24;
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif
+}
 body{
-  min-height:100vh;
+  height:100vh;
   padding:
     max(var(--screen-buffer),env(safe-area-inset-top))
     max(var(--screen-buffer),env(safe-area-inset-right))
@@ -37,7 +46,7 @@ body{
 .display{
   width:100%;
   height:calc(100vh - (var(--screen-buffer) * 2));
-  min-height:420px;
+  min-height:0;
   overflow:hidden;
   border:5px solid #c79123;
   border-radius:22px;
@@ -62,6 +71,53 @@ body{
   background:linear-gradient(225deg,rgba(84,224,255,.55),transparent 72%);
   clip-path:polygon(100% 0,0 27%,57% 100%,100% 100%)
 }
+
+.score-strip{
+  position:absolute;
+  z-index:7;
+  left:clamp(12px,1.6vw,24px);
+  right:clamp(12px,1.6vw,24px);
+  top:clamp(10px,1.4vh,18px);
+  display:grid;
+  gap:6px;
+  pointer-events:none
+}
+.score-chip{
+  min-width:0;
+  padding:5px 8px;
+  border:1px solid rgba(255,226,126,.45);
+  border-radius:8px;
+  background:rgba(5,15,58,.74);
+  color:#fff1ae;
+  font-size:clamp(8px,min(.85vw,1.3vh),14px);
+  font-weight:900;
+  letter-spacing:.04em;
+  text-align:center;
+  text-transform:uppercase;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis
+}
+.score-chip b{color:#fff;font:900 1.2em "Courier New",monospace}
+.answer-countdown{
+  position:absolute;
+  z-index:20;
+  inset:0;
+  display:none;
+  place-items:center;
+  pointer-events:none;
+  color:#fff4b0;
+  font-family:Impact,"Arial Black",Arial,sans-serif;
+  font-size:clamp(150px,min(30vw,48vh),430px);
+  line-height:1;
+  text-shadow:
+    0 7px 0 #75185e,
+    0 12px 0 #270c50,
+    0 18px 44px rgba(0,0,0,.52)
+}
+.answer-countdown.show{display:grid;animation:countPop .18s ease-out}
+@keyframes countPop{from{opacity:.3;transform:scale(.78)}to{opacity:1;transform:scale(1)}}
+
 .round{
   position:relative;z-index:1;
   width:100%;height:100%;
@@ -70,11 +126,11 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:clamp(70px,8vh,110px) clamp(18px,3vw,52px) clamp(30px,5vh,60px)
+  padding:clamp(104px,13vh,142px) clamp(18px,3vw,52px) clamp(22px,3.5vh,50px)
 }
 .round-meta{
   position:absolute;
-  left:clamp(13px,2vw,28px);right:clamp(13px,2vw,28px);top:clamp(12px,2vh,23px);
+  left:clamp(13px,2vw,28px);right:clamp(13px,2vw,28px);top:clamp(54px,7vh,74px);
   display:flex;justify-content:space-between;gap:10px;
   color:var(--muted);
   font-size:clamp(10px,1vw,17px);
@@ -105,7 +161,7 @@ body{
   background:linear-gradient(180deg,#fbfdff,#dae6ff);
   color:#0a205f;
   font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(46px,7vw,126px);
+  font-size:clamp(38px,min(7vw,11vh),126px);
   line-height:.94;
   letter-spacing:.018em;
   text-transform:uppercase;
@@ -115,13 +171,13 @@ body{
 .clue.hidden{letter-spacing:.13em;color:#17265e}
 .artist{
   margin-top:clamp(14px,2vh,25px);
-  font-size:clamp(20px,2.3vw,42px);
+  font-size:clamp(16px,min(2.3vw,3.6vh),42px);
   font-weight:900;text-transform:uppercase;letter-spacing:.055em;
   color:#fff0a4;text-shadow:0 3px 0 #37104b
 }
 .playback{
   width:min(1000px,94%);
-  margin-top:clamp(22px,3vh,38px);
+  margin-top:clamp(12px,2vh,30px);
   display:grid;
   grid-template-columns:minmax(0,1fr) 150px;
   gap:16px;
@@ -172,7 +228,7 @@ body{
 .answer.show{display:block;animation:reveal .2s ease-out}
 .answer-film{
   font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(42px,6vw,105px);
+  font-size:clamp(34px,min(6vw,9vh),105px);
   line-height:.94;text-transform:uppercase;color:#fff2a7;
   text-shadow:0 4px 0 #781961,0 7px 0 #290d50
 }
@@ -188,22 +244,43 @@ body{
   font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase
 }
 @keyframes reveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+@media(max-height:720px){
+  .round{padding-top:92px;padding-bottom:16px}
+  .round-meta{top:48px}
+  .prompt{margin-bottom:8px;padding:5px 13px}
+  .clue{padding:13px 16px}
+  .artist{margin-top:8px}
+  .playback{margin-top:10px}
+  .answer{margin-top:10px;padding-top:10px}
+}
 @media(max-width:760px){
-  :root{--screen-buffer:8px}
-  body{overflow:auto}
-  .display{height:auto;min-height:calc(100vh - 16px)}
-  .round{min-height:calc(100vh - 16px);padding:65px 10px 30px}
-  .round-meta{font-size:8px}
-  .clue{font-size:clamp(36px,11vw,60px);padding:18px 9px}
-  .artist{font-size:18px}
-  .playback{grid-template-columns:1fr}
-  .answer-film{font-size:clamp(34px,10vw,58px)}
+  :root{--screen-buffer:7px}
+  .display{height:calc(100vh - 14px);min-height:0}
+  .score-strip{top:7px;left:7px;right:7px;gap:3px}
+  .score-chip{padding:3px 4px;font-size:7px}
+  .round{height:100%;min-height:0;padding:82px 8px 16px}
+  .round-meta{left:7px;right:7px;top:42px;font-size:7px}
+  .round-meta span{padding:3px 5px}
+  .prompt{font-size:8px;padding:4px 8px;margin-bottom:6px}
+  .clue{font-size:clamp(30px,min(11vw,7vh),54px);padding:11px 7px;border-width:3px}
+  .artist{font-size:13px;margin-top:6px}
+  .playback{width:100%;grid-template-columns:1fr 90px;gap:7px;margin-top:9px}
+  .progress{height:17px}
+  .progress-meta{font-size:7px}
+  .timer{font-size:12px}
+  .audio-state{padding:6px 4px;font-size:7px}
+  .answer{margin-top:8px;padding-top:8px}
+  .answer-film{font-size:clamp(28px,min(10vw,7vh),54px)}
+  .answer-song{font-size:11px;margin-top:4px}
+  .sync-note{font-size:6px;right:7px;bottom:5px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="display" id="display">
+  <div class="score-strip" id="scoreStrip" aria-label="Current scores"></div>
+  <div class="answer-countdown" id="answerCountdown" aria-live="assertive"></div>
   <section class="round">
     <div class="round-meta">
       <span id="roundEra">Ready</span>
@@ -230,7 +307,7 @@ body{
       <div class="answer-song" id="answerSong"></div>
     </div>
   </section>
-  <div class="sync-note" id="syncNote">Player Display · v0.6.0</div>
+  <div class="sync-note" id="syncNote">Player Display · v0.8.1</div>
 </main>
 
 <script>
@@ -268,6 +345,16 @@ function render(state){
   if(state.playback==="playing")audio.classList.add("playing");
   if(state.playback==="error")audio.classList.add("error");
   audio.textContent=state.audioState||"Waiting";
+
+  const contestants=Array.isArray(state.contestants)?state.contestants:[];
+  const scoreStrip=$("#scoreStrip");
+  scoreStrip.style.gridTemplateColumns=`repeat(${Math.max(1,contestants.length)},minmax(0,1fr))`;
+  scoreStrip.innerHTML=contestants.map(c=>`<div class="score-chip">${escapeHtml(c.name||"Player")} <b>${Number(c.score)||0}</b></div>`).join("");
+
+  const countdown=$("#answerCountdown");
+  const countdownVisible=Boolean(state.answerCountdownActive) && state.answerCountdownValue!==null;
+  countdown.classList.toggle("show",countdownVisible);
+  countdown.textContent=countdownVisible?String(state.answerCountdownValue):"";
 
   $("#answer").classList.toggle("show",Boolean(state.answerVisible));
   if(state.answerVisible){

@@ -1,55 +1,122 @@
-era,id,song,artist,film,year,source_zip,original_filename,site_filename,duration_seconds
-1980s,caddyshack-im-alright,I'm Alright,Kenny Loggins,Caddyshack,1980,The 80s Songs.zip,Kenny Loggins - I'm Alright (Lyrics).mp3,caddyshack-im-alright.mp3,223.3
-1980s,footloose-footloose,Footloose,Kenny Loggins,Footloose,1984,The 80s Songs.zip,Kenny Loggins - Footloose (Lyrics).mp3,footloose-footloose.mp3,226.4
-1980s,top-gun-danger-zone,Danger Zone,Kenny Loggins,Top Gun,1986,The 80s Songs.zip,Kenny Loggins - Danger Zone (Lyrics) 4.mp3,top-gun-danger-zone.mp3,215.7
-1980s,top-gun-take-my-breath-away,Take My Breath Away,Berlin,Top Gun,1986,The 80s Songs.zip,Berlin - Take My Breath Away (Lyrics).mp3,top-gun-take-my-breath-away.mp3,252.8
-1980s,ghostbusters-ghostbusters,Ghostbusters,Ray Parker Jr.,Ghostbusters,1984,The 80s Songs.zip,"Ray Parker, Jr. - Ghostbusters (Lyrics).mp3",ghostbusters-ghostbusters.mp3,245.8
-1980s,back-to-the-future-power-of-love,The Power of Love,Huey Lewis and the News,Back to the Future,1985,The 80s Songs.zip,Huey Lewis and the News - The Power of Love (Lyrics) 4.mp3,back-to-the-future-power-of-love.mp3,234.6
-1980s,rocky-iii-eye-of-the-tiger,Eye of the Tiger,Survivor,Rocky III,1982,The 80s Songs.zip,Survivor - Eye Of The Tiger (Lyrics) 4.mp3,rocky-iii-eye-of-the-tiger.mp3,242.5
-1980s,rocky-iv-hearts-on-fire,Hearts on Fire,John Cafferty,Rocky IV,1985,The 80s Songs.zip,𝘑𝘰𝘩𝘯 𝘊𝘢𝘧𝘧𝘦𝘳𝘵𝘺 - 𝘏𝘦𝘢𝘳𝘵𝘴 𝘰𝘯 𝘍𝘪𝘳𝘦 (𝘓𝘺𝘳𝘪𝘤𝘴).mp3,rocky-iv-hearts-on-fire.mp3,246.3
-1980s,karate-kid-youre-the-best,You're the Best,Joe Esposito,The Karate Kid,1984,The 80s Songs.zip,Joe Esposito - You're The Best (LYRICS) 4.mp3,karate-kid-youre-the-best.mp3,175.2
-1980s,flashdance-what-a-feeling,Flashdance... What a Feeling,Irene Cara,Flashdance,1983,The 80s Songs.zip,Irene Cara - Flashdance...What A Feeling (Lyrics) 4.mp3,flashdance-what-a-feeling.mp3,247.9
-1980s,flashdance-maniac,Maniac,Michael Sembello,Flashdance,1983,The 80s Songs.zip,Michael Sembello - Maniac (Lyrics) 4.mp3,flashdance-maniac.mp3,245.1
-1980s,blues-brothers-everybody-needs-somebody,Everybody Needs Somebody to Love,The Blues Brothers,The Blues Brothers,1980,The 80s Songs.zip,The Blues Brothers - Everybody Needs Somebody To Love (Lyrics HD).mp3,blues-brothers-everybody-needs-somebody.mp3,205.5
-1980s,breakfast-club-dont-you-forget-about-me,Don't You (Forget About Me),Simple Minds,The Breakfast Club,1985,The 80s Songs.zip,Simple Minds - Don't You (Forget About Me) (Lyrics).mp3,breakfast-club-dont-you-forget-about-me.mp3,258.0
-1980s,beverly-hills-cop-heat-is-on,The Heat Is On,Glenn Frey,Beverly Hills Cop,1984,The 80s Songs.zip,Glenn Frey - The Heat Is On (Lyrics).mp3,beverly-hills-cop-heat-is-on.mp3,227.5
-1980s,vacation-holiday-road,Holiday Road,Lindsey Buckingham,National Lampoon's Vacation,1983,The 80s Songs.zip,Holiday Road - Lindsay Buckingham (Lyrics).mp3,vacation-holiday-road.mp3,134.5
-1980s,ferris-bueller-twist-and-shout,Twist and Shout,The Beatles,Ferris Bueller's Day Off,1986,The 80s Songs.zip,The Beatles - TWIST AND SHOUT (Lyrics Video).mp3,ferris-bueller-twist-and-shout.mp3,155.4
-1980s,neverending-story-theme,The NeverEnding Story,Limahl,The NeverEnding Story,1984,The 80s Songs.zip,Limahl - Never Ending Story (Lyrics) from Stranger Things 4.mp3,neverending-story-theme.mp3,201.1
-1980s,purple-rain-purple-rain,Purple Rain,Prince and the Revolution,Purple Rain,1984,The 80s Songs.zip,Prince - Purple Rain (Lyrics) 4.mp3,purple-rain-purple-rain.mp3,245.5
-1980s,risky-business-old-time-rock-and-roll,Old Time Rock and Roll,Bob Seger,Risky Business,1983,The 80s Songs.zip,Bob Seger & The Silver Bullet Band - Old Time Rock & Roll (Lyrics) 4.mp3,risky-business-old-time-rock-and-roll.mp3,194.2
-1980s,dirty-dancing-time-of-my-life,(I've Had) The Time of My Life,Bill Medley & Jennifer Warnes,Dirty Dancing,1987,The 80s Songs.zip,(I've Had) The Time Of My Life - Bill Medley & Jennifer Warnes - Dirty Dancing  [Lyrics].mp3,dirty-dancing-time-of-my-life.mp3,296.2
-1990s,toy-story-friend-in-me,You've Got a Friend in Me,Randy Newman,Toy Story,1995,The 90s Songs.zip,Randy Newman   You've Got a Friend in Me From  Toy Story 4  Audio Only   Lyrics.mp3,toy-story-friend-in-me.mp3,131.8
-1990s,titanic-my-heart-will-go-on,My Heart Will Go On,Céline Dion,Titanic,1997,The 90s Songs.zip,Celine Dion - My Heart Will Go On (Lyrics) 4.mp3,titanic-my-heart-will-go-on.mp3,275.1
-1990s,armageddon-dont-want-to-miss-a-thing,I Don't Want to Miss a Thing,Aerosmith,Armageddon,1998,The 90s Songs.zip,Aerosmith - I Don't Want to Miss a Thing (Lyrics) 4.mp3,armageddon-dont-want-to-miss-a-thing.mp3,322.9
-1990s,aladdin-whole-new-world,A Whole New World,Peabo Bryson & Regina Belle,Aladdin,1992,The 90s Songs.zip,"Peabo Bryson, Regina Belle - A Whole New World (Aladdin's Theme) [Lyrics].mp3",aladdin-whole-new-world.mp3,243.5
-1990s,aladdin-friend-like-me,Friend Like Me,Robin Williams,Aladdin,1992,The 90s Songs.zip,"Aladdin, Friend Like Me (Lyrics).mp3",aladdin-friend-like-me.mp3,147.1
-1990s,beauty-and-the-beast-title,Beauty and the Beast,Céline Dion & Peabo Bryson,Beauty and the Beast,1991,The 90s Songs.zip,"Beauty and the Beast - Céline Dion, Peabo Bryson (Lyrics) 4.mp3",beauty-and-the-beast-title.mp3,245.2
-1990s,beauty-and-the-beast-be-our-guest,Be Our Guest,"Angela Lansbury, Jerry Orbach & Cast",Beauty and the Beast,1991,The 90s Songs.zip,Be Our Guest  lyrics.mp3,beauty-and-the-beast-be-our-guest.mp3,231.6
-1990s,lion-king-circle-of-life,Circle of Life,Elton John,The Lion King,1994,The 90s Songs.zip,CIRCLE OF LIFE (Lyrics) - ELTON JOHN.mp3,lion-king-circle-of-life.mp3,292.4
-1990s,lion-king-can-you-feel-the-love-tonight,Can You Feel the Love Tonight,Elton John,The Lion King,1994,The 90s Songs.zip,Elton John - Can You Feel The Love Tonight [Lyrics] 4.mp3,lion-king-can-you-feel-the-love-tonight.mp3,242.0
-1990s,lion-king-hakuna-matata,Hakuna Matata,"Nathan Lane, Ernie Sabella & Cast",The Lion King,1994,The 90s Songs.zip,Hakuna Matata lyrics.mp3,lion-king-hakuna-matata.mp3,213.2
-1990s,pocahontas-colors-of-the-wind,Colors of the Wind,Vanessa Williams,Pocahontas,1995,The 90s Songs.zip,Pocahontas - Colors of the Wind - Lyrics 4.mp3,pocahontas-colors-of-the-wind.mp3,202.2
-1990s,mulan-reflection,Reflection,Christina Aguilera,Mulan,1998,The 90s Songs.zip,Reflection - Christina Aguilera (Lyrics) 🎵.mp3,mulan-reflection.mp3,219.2
-1990s,mulan-make-a-man-out-of-you,I'll Make a Man Out of You,Donny Osmond,Mulan,1998,The 90s Songs.zip,I'LL MAKE A MAN OUT OF YOU - DONNY OSMOND LYRICS.mp3,mulan-make-a-man-out-of-you.mp3,201.7
-1990s,tarzan-youll-be-in-my-heart,You'll Be in My Heart,Phil Collins,Tarzan,1999,The 90s Songs.zip,You'll Be In My Heart - Phil Collins (Lyrics) [HD] 4.mp3,tarzan-youll-be-in-my-heart.mp3,256.5
-1990s,tarzan-strangers-like-me,Strangers Like Me,Phil Collins,Tarzan,1999,The 90s Songs.zip,Phil Collins - Strangers Like Me (Lyrics HD).mp3,tarzan-strangers-like-me.mp3,180.4
-1990s,goofy-movie-i2i,I2I,Tevin Campbell,A Goofy Movie,1995,The 90s Songs.zip,Tevin Campbell & Rosie Gaines - I2I (Lyrics HD).mp3,goofy-movie-i2i.mp3,248.0
-1990s,prince-of-egypt-when-you-believe,When You Believe,Whitney Houston & Mariah Carey,The Prince of Egypt,1998,The 90s Songs.zip,When You Believe - Whitney Houston & Mariah Carey (Lyrics) 🎵 4.mp3,prince-of-egypt-when-you-believe.mp3,305.2
-1990s,harry-potter-hedwigs-theme,Hedwig's Theme,John Williams,Harry Potter and the Sorcerer's Stone,2001,The 90s Songs.zip,Hedwig's Theme 4.mp3,harry-potter-hedwigs-theme.mp3,309.1
-2000s+,shrek-all-star,All Star,Smash Mouth,Shrek,2001,The 2000s Songs.zip,Smash Mouth - All Star (Lyrics) 4.mp3,shrek-all-star.mp3,197.0
-2000s+,shrek-im-a-believer,I'm a Believer,Smash Mouth,Shrek,2001,The 2000s Songs.zip,Smash Mouth - I'm a Believer (lyrics) 4.mp3,shrek-im-a-believer.mp3,185.7
-2000s+,cars-life-is-a-highway,Life Is a Highway,Rascal Flatts,Cars,2006,The 2000s Songs.zip,Rascal Flatts - Life Is A Highway (Lyrics) 4.mp3,cars-life-is-a-highway.mp3,275.8
-2000s+,cars-real-gone,Real Gone,Sheryl Crow,Cars,2006,The 2000s Songs.zip,Real Gone - Sheryl Crow (Cars Soundtrack) with lyrics 4.mp3,cars-real-gone.mp3,202.9
-2000s+,8-mile-lose-yourself,Lose Yourself,Eminem,8 Mile,2002,The 2000s Songs.zip,Eminem - Lose Yourself (Lyrics) 4.mp3,8-mile-lose-yourself.mp3,320.4
-2000s+,school-of-rock-title,School of Rock,School of Rock Cast,School of Rock,2003,The 2000s Songs.zip,School of Rock.mp3,school-of-rock-title.mp3,252.7
-2000s+,sahara-magic-carpet-ride,Magic Carpet Ride,Steppenwolf,Sahara,2005,The 2000s Songs.zip,Steppenwolf _ Magic Carpet Ride (Lyrics).mp3,sahara-magic-carpet-ride.mp3,266.2
-2000s+,transformers-what-ive-done,What I've Done,Linkin Park,Transformers,2007,The 2000s Songs.zip,Linkin Park - What I've Done (Lyrics) 4.mp3,transformers-what-ive-done.mp3,205.1
-2000s+,twilight-decode,Decode,Paramore,Twilight,2008,The 2000s Songs.zip,Decode - Paramore (Lyrics) 🎵 4.mp3,twilight-decode.mp3,250.2
-2000s+,spider-man-hero,Hero,Chad Kroeger feat. Josey Scott,Spider-Man,2002,The 2000s Songs.zip,Hero - Chad Kroeger feat. Josey Scott - lyrics 4.mp3,spider-man-hero.mp3,198.3
-2000s+,avengers-shoot-to-thrill,Shoot to Thrill,AC/DC,The Avengers,2012,The 2000s Songs.zip,ACDC Shoot To Thrill Lyrics 4.mp3,avengers-shoot-to-thrill.mp3,318.8
-2000s+,iron-man-back-in-black,Back in Black,AC/DC,Iron Man,2008,The 2000s Songs.zip,AC_DC - Back In Black (Lyrics) 4.mp3,iron-man-back-in-black.mp3,251.7
-2000s+,thor-ragnarok-immigrant-song,Immigrant Song,Led Zeppelin,Thor: Ragnarok,2017,The 2000s Songs.zip,Led Zeppelin - Immigrant Song _ Lyrics.mp3,thor-ragnarok-immigrant-song.mp3,147.0
-2000s+,guardians-hooked-on-a-feeling,Hooked on a Feeling,Blue Swede,Guardians of the Galaxy,2014,The 2000s Songs.zip,Blue Swede - Hooked On A Feeling (Lyrics) 4.mp3,guardians-hooked-on-a-feeling.mp3,171.6
-2000s+,guardians-come-and-get-your-love,Come and Get Your Love,Redbone,Guardians of the Galaxy,2014,The 2000s Songs.zip,Redbone - Come And Get Your Love (Lyrics).mp3,guardians-come-and-get-your-love.mp3,207.6
-2000s+,spider-verse-sunflower,Sunflower,Post Malone & Swae Lee,Spider-Man: Into the Spider-Verse,2018,The 2000s Songs.zip,"Post Malone, Swae Lee - Sunflower (Lyrics) 4.mp3",spider-verse-sunflower.mp3,158.1
+era,themes,id,song,artist,film,year,source_zip,original_filename,site_filename,duration_seconds
+1980s,,caddyshack-im-alright,I'm Alright,Kenny Loggins,Caddyshack,1980,The 80s Songs.zip,Kenny Loggins - I'm Alright (Lyrics).mp3,caddyshack-im-alright.mp3,223.3
+1980s,,footloose-footloose,Footloose,Kenny Loggins,Footloose,1984,The 80s Songs.zip,Kenny Loggins - Footloose (Lyrics).mp3,footloose-footloose.mp3,226.4
+1980s,,top-gun-danger-zone,Danger Zone,Kenny Loggins,Top Gun,1986,The 80s Songs.zip,Kenny Loggins - Danger Zone (Lyrics) 4.mp3,top-gun-danger-zone.mp3,215.7
+1980s,,top-gun-take-my-breath-away,Take My Breath Away,Berlin,Top Gun,1986,The 80s Songs.zip,Berlin - Take My Breath Away (Lyrics).mp3,top-gun-take-my-breath-away.mp3,252.8
+1980s,,ghostbusters-ghostbusters,Ghostbusters,Ray Parker Jr.,Ghostbusters,1984,The 80s Songs.zip,"Ray Parker, Jr. - Ghostbusters (Lyrics).mp3",ghostbusters-ghostbusters.mp3,245.8
+1980s,,back-to-the-future-power-of-love,The Power of Love,Huey Lewis and the News,Back to the Future,1985,The 80s Songs.zip,Huey Lewis and the News - The Power of Love (Lyrics) 4.mp3,back-to-the-future-power-of-love.mp3,234.6
+1980s,,rocky-iii-eye-of-the-tiger,Eye of the Tiger,Survivor,Rocky III,1982,The 80s Songs.zip,Survivor - Eye Of The Tiger (Lyrics) 4.mp3,rocky-iii-eye-of-the-tiger.mp3,242.5
+1980s,,rocky-iv-hearts-on-fire,Hearts on Fire,John Cafferty,Rocky IV,1985,The 80s Songs.zip,𝘑𝘰𝘩𝘯 𝘊𝘢𝘧𝘧𝘦𝘳𝘵𝘺 - 𝘏𝘦𝘢𝘳𝘵𝘴 𝘰𝘯 𝘍𝘪𝘳𝘦 (𝘓𝘺𝘳𝘪𝘤𝘴).mp3,rocky-iv-hearts-on-fire.mp3,246.3
+1980s,,karate-kid-youre-the-best,You're the Best,Joe Esposito,The Karate Kid,1984,The 80s Songs.zip,Joe Esposito - You're The Best (LYRICS) 4.mp3,karate-kid-youre-the-best.mp3,175.2
+1980s,,flashdance-what-a-feeling,Flashdance... What a Feeling,Irene Cara,Flashdance,1983,The 80s Songs.zip,Irene Cara - Flashdance...What A Feeling (Lyrics) 4.mp3,flashdance-what-a-feeling.mp3,247.9
+1980s,,flashdance-maniac,Maniac,Michael Sembello,Flashdance,1983,The 80s Songs.zip,Michael Sembello - Maniac (Lyrics) 4.mp3,flashdance-maniac.mp3,245.1
+1980s,,blues-brothers-everybody-needs-somebody,Everybody Needs Somebody to Love,The Blues Brothers,The Blues Brothers,1980,The 80s Songs.zip,The Blues Brothers - Everybody Needs Somebody To Love (Lyrics HD).mp3,blues-brothers-everybody-needs-somebody.mp3,205.5
+1980s,,breakfast-club-dont-you-forget-about-me,Don't You (Forget About Me),Simple Minds,The Breakfast Club,1985,The 80s Songs.zip,Simple Minds - Don't You (Forget About Me) (Lyrics).mp3,breakfast-club-dont-you-forget-about-me.mp3,258.0
+1980s,,beverly-hills-cop-heat-is-on,The Heat Is On,Glenn Frey,Beverly Hills Cop,1984,The 80s Songs.zip,Glenn Frey - The Heat Is On (Lyrics).mp3,beverly-hills-cop-heat-is-on.mp3,227.5
+1980s,,vacation-holiday-road,Holiday Road,Lindsey Buckingham,National Lampoon's Vacation,1983,The 80s Songs.zip,Holiday Road - Lindsay Buckingham (Lyrics).mp3,vacation-holiday-road.mp3,134.5
+1980s,,ferris-bueller-twist-and-shout,Twist and Shout,The Beatles,Ferris Bueller's Day Off,1986,The 80s Songs.zip,The Beatles - TWIST AND SHOUT (Lyrics Video).mp3,ferris-bueller-twist-and-shout.mp3,155.4
+1980s,,neverending-story-theme,The NeverEnding Story,Limahl,The NeverEnding Story,1984,The 80s Songs.zip,Limahl - Never Ending Story (Lyrics) from Stranger Things 4.mp3,neverending-story-theme.mp3,201.1
+1980s,,purple-rain-purple-rain,Purple Rain,Prince and the Revolution,Purple Rain,1984,The 80s Songs.zip,Prince - Purple Rain (Lyrics) 4.mp3,purple-rain-purple-rain.mp3,245.5
+1980s,,risky-business-old-time-rock-and-roll,Old Time Rock and Roll,Bob Seger,Risky Business,1983,The 80s Songs.zip,Bob Seger & The Silver Bullet Band - Old Time Rock & Roll (Lyrics) 4.mp3,risky-business-old-time-rock-and-roll.mp3,194.2
+1980s,,dirty-dancing-time-of-my-life,(I've Had) The Time of My Life,Bill Medley & Jennifer Warnes,Dirty Dancing,1987,The 80s Songs.zip,(I've Had) The Time Of My Life - Bill Medley & Jennifer Warnes - Dirty Dancing  [Lyrics].mp3,dirty-dancing-time-of-my-life.mp3,296.2
+1990s,,toy-story-friend-in-me,You've Got a Friend in Me,Randy Newman,Toy Story,1995,The 90s Songs.zip,Randy Newman   You've Got a Friend in Me From  Toy Story 4  Audio Only   Lyrics.mp3,toy-story-friend-in-me.mp3,131.8
+1990s,,titanic-my-heart-will-go-on,My Heart Will Go On,Céline Dion,Titanic,1997,The 90s Songs.zip,Celine Dion - My Heart Will Go On (Lyrics) 4.mp3,titanic-my-heart-will-go-on.mp3,275.1
+1990s,,armageddon-dont-want-to-miss-a-thing,I Don't Want to Miss a Thing,Aerosmith,Armageddon,1998,The 90s Songs.zip,Aerosmith - I Don't Want to Miss a Thing (Lyrics) 4.mp3,armageddon-dont-want-to-miss-a-thing.mp3,322.9
+1990s,,aladdin-whole-new-world,A Whole New World,Peabo Bryson & Regina Belle,Aladdin,1992,The 90s Songs.zip,"Peabo Bryson, Regina Belle - A Whole New World (Aladdin's Theme) [Lyrics].mp3",aladdin-whole-new-world.mp3,243.5
+1990s,,aladdin-friend-like-me,Friend Like Me,Robin Williams,Aladdin,1992,The 90s Songs.zip,"Aladdin, Friend Like Me (Lyrics).mp3",aladdin-friend-like-me.mp3,147.1
+1990s,,beauty-and-the-beast-title,Beauty and the Beast,Céline Dion & Peabo Bryson,Beauty and the Beast,1991,The 90s Songs.zip,"Beauty and the Beast - Céline Dion, Peabo Bryson (Lyrics) 4.mp3",beauty-and-the-beast-title.mp3,245.2
+1990s,,beauty-and-the-beast-be-our-guest,Be Our Guest,"Angela Lansbury, Jerry Orbach & Cast",Beauty and the Beast,1991,The 90s Songs.zip,Be Our Guest  lyrics.mp3,beauty-and-the-beast-be-our-guest.mp3,231.6
+1990s,,lion-king-circle-of-life,Circle of Life,Elton John,The Lion King,1994,The 90s Songs.zip,CIRCLE OF LIFE (Lyrics) - ELTON JOHN.mp3,lion-king-circle-of-life.mp3,292.4
+1990s,,lion-king-can-you-feel-the-love-tonight,Can You Feel the Love Tonight,Elton John,The Lion King,1994,The 90s Songs.zip,Elton John - Can You Feel The Love Tonight [Lyrics] 4.mp3,lion-king-can-you-feel-the-love-tonight.mp3,242.0
+1990s,,lion-king-hakuna-matata,Hakuna Matata,"Nathan Lane, Ernie Sabella & Cast",The Lion King,1994,The 90s Songs.zip,Hakuna Matata lyrics.mp3,lion-king-hakuna-matata.mp3,213.2
+1990s,,pocahontas-colors-of-the-wind,Colors of the Wind,Vanessa Williams,Pocahontas,1995,The 90s Songs.zip,Pocahontas - Colors of the Wind - Lyrics 4.mp3,pocahontas-colors-of-the-wind.mp3,202.2
+1990s,,mulan-reflection,Reflection,Christina Aguilera,Mulan,1998,The 90s Songs.zip,Reflection - Christina Aguilera (Lyrics) 🎵.mp3,mulan-reflection.mp3,219.2
+1990s,,mulan-make-a-man-out-of-you,I'll Make a Man Out of You,Donny Osmond,Mulan,1998,The 90s Songs.zip,I'LL MAKE A MAN OUT OF YOU - DONNY OSMOND LYRICS.mp3,mulan-make-a-man-out-of-you.mp3,201.7
+1990s,,tarzan-youll-be-in-my-heart,You'll Be in My Heart,Phil Collins,Tarzan,1999,The 90s Songs.zip,You'll Be In My Heart - Phil Collins (Lyrics) [HD] 4.mp3,tarzan-youll-be-in-my-heart.mp3,256.5
+1990s,,tarzan-strangers-like-me,Strangers Like Me,Phil Collins,Tarzan,1999,The 90s Songs.zip,Phil Collins - Strangers Like Me (Lyrics HD).mp3,tarzan-strangers-like-me.mp3,180.4
+1990s,,goofy-movie-i2i,I2I,Tevin Campbell,A Goofy Movie,1995,The 90s Songs.zip,Tevin Campbell & Rosie Gaines - I2I (Lyrics HD).mp3,goofy-movie-i2i.mp3,248.0
+1990s,,prince-of-egypt-when-you-believe,When You Believe,Whitney Houston & Mariah Carey,The Prince of Egypt,1998,The 90s Songs.zip,When You Believe - Whitney Houston & Mariah Carey (Lyrics) 🎵 4.mp3,prince-of-egypt-when-you-believe.mp3,305.2
+1990s,,harry-potter-hedwigs-theme,Hedwig's Theme,John Williams,Harry Potter and the Sorcerer's Stone,2001,The 90s Songs.zip,Hedwig's Theme 4.mp3,harry-potter-hedwigs-theme.mp3,309.1
+2000s+,,shrek-all-star,All Star,Smash Mouth,Shrek,2001,The 2000s Songs.zip,Smash Mouth - All Star (Lyrics) 4.mp3,shrek-all-star.mp3,197.0
+2000s+,,shrek-im-a-believer,I'm a Believer,Smash Mouth,Shrek,2001,The 2000s Songs.zip,Smash Mouth - I'm a Believer (lyrics) 4.mp3,shrek-im-a-believer.mp3,185.7
+2000s+,,cars-life-is-a-highway,Life Is a Highway,Rascal Flatts,Cars,2006,The 2000s Songs.zip,Rascal Flatts - Life Is A Highway (Lyrics) 4.mp3,cars-life-is-a-highway.mp3,275.8
+2000s+,,cars-real-gone,Real Gone,Sheryl Crow,Cars,2006,The 2000s Songs.zip,Real Gone - Sheryl Crow (Cars Soundtrack) with lyrics 4.mp3,cars-real-gone.mp3,202.9
+2000s+,,8-mile-lose-yourself,Lose Yourself,Eminem,8 Mile,2002,The 2000s Songs.zip,Eminem - Lose Yourself (Lyrics) 4.mp3,8-mile-lose-yourself.mp3,320.4
+2000s+,,school-of-rock-title,School of Rock,School of Rock Cast,School of Rock,2003,The 2000s Songs.zip,School of Rock.mp3,school-of-rock-title.mp3,252.7
+2000s+,,sahara-magic-carpet-ride,Magic Carpet Ride,Steppenwolf,Sahara,2005,The 2000s Songs.zip,Steppenwolf _ Magic Carpet Ride (Lyrics).mp3,sahara-magic-carpet-ride.mp3,266.2
+2000s+,,transformers-what-ive-done,What I've Done,Linkin Park,Transformers,2007,The 2000s Songs.zip,Linkin Park - What I've Done (Lyrics) 4.mp3,transformers-what-ive-done.mp3,205.1
+2000s+,,twilight-decode,Decode,Paramore,Twilight,2008,The 2000s Songs.zip,Decode - Paramore (Lyrics) 🎵 4.mp3,twilight-decode.mp3,250.2
+2000s+,,spider-man-hero,Hero,Chad Kroeger feat. Josey Scott,Spider-Man,2002,The 2000s Songs.zip,Hero - Chad Kroeger feat. Josey Scott - lyrics 4.mp3,spider-man-hero.mp3,198.3
+2000s+,,avengers-shoot-to-thrill,Shoot to Thrill,AC/DC,The Avengers,2012,The 2000s Songs.zip,ACDC Shoot To Thrill Lyrics 4.mp3,avengers-shoot-to-thrill.mp3,318.8
+2000s+,,iron-man-back-in-black,Back in Black,AC/DC,Iron Man,2008,The 2000s Songs.zip,AC_DC - Back In Black (Lyrics) 4.mp3,iron-man-back-in-black.mp3,251.7
+2000s+,,thor-ragnarok-immigrant-song,Immigrant Song,Led Zeppelin,Thor: Ragnarok,2017,The 2000s Songs.zip,Led Zeppelin - Immigrant Song _ Lyrics.mp3,thor-ragnarok-immigrant-song.mp3,147.0
+2000s+,,guardians-hooked-on-a-feeling,Hooked on a Feeling,Blue Swede,Guardians of the Galaxy,2014,The 2000s Songs.zip,Blue Swede - Hooked On A Feeling (Lyrics) 4.mp3,guardians-hooked-on-a-feeling.mp3,171.6
+2000s+,,guardians-come-and-get-your-love,Come and Get Your Love,Redbone,Guardians of the Galaxy,2014,The 2000s Songs.zip,Redbone - Come And Get Your Love (Lyrics).mp3,guardians-come-and-get-your-love.mp3,207.6
+2000s+,,spider-verse-sunflower,Sunflower,Post Malone & Swae Lee,Spider-Man: Into the Spider-Verse,2018,The 2000s Songs.zip,"Post Malone, Swae Lee - Sunflower (Lyrics) 4.mp3",spider-verse-sunflower.mp3,158.1
+1980s,,goonies-the-goonies-r-good-enough,The Goonies 'R' Good Enough,Cyndi Lauper,The Goonies,1985,The 80s Update Song.zip,The Goonies 'R' Good Enough - Cyndi Lauper _LYRICS IN VIDEO_.mp3,goonies-the-goonies-r-good-enough.mp3,220.3
+1980s,,transformers-movie-the-touch,The Touch,Stan Bush,The Transformers: The Movie,1986,The 80s Update Song.zip,Stan Bush-The Touch Lyrics.mp3,transformers-movie-the-touch.mp3,259.1
+1980s,,back-to-the-future-back-in-time,Back in Time,Huey Lewis and the News,Back to the Future,1985,The 80s Update Song.zip,Huey Lewis And The News - Back In Time (Lyrics HD).mp3,back-to-the-future-back-in-time.mp3,258.1
+1980s,,beverly-hills-cop-axel-f,Axel F,Harold Faltermeyer,Beverly Hills Cop,1984,The 80s Update Song.zip,Axel F 4.mp3,beverly-hills-cop-axel-f.mp3,180.9
+1980s,,et-flying-theme,Flying Theme,John Williams,E.T. the Extra-Terrestrial,1982,The 80s Update Song.zip,Flying Theme _ From the Soundtrack to _E.T. The Extra-Terrestrial_ by John Williams 4.mp3,et-flying-theme.mp3,226.8
+1980s,,ghostbusters-ii-on-our-own,On Our Own,Bobby Brown,Ghostbusters II,1989,The 80s Update Song.zip,Bobby Brown-On Our Own Lyrics.mp3,ghostbusters-ii-on-our-own.mp3,273.4
+1980s,,beetlejuice-main-titles,Main Titles,Danny Elfman,Beetlejuice,1988,The 80s Update Song.zip,Main Titles (From _Beetlejuice_ Soundtrack) 4.mp3,beetlejuice-main-titles.mp3,148.5
+1980s,,raiders-raiders-march,Raiders March,John Williams,Raiders of the Lost Ark,1981,The 80s Update Song.zip,The Raiders March (Original Version) - John Williams.mp3,raiders-raiders-march.mp3,145.7
+1980s,,labyrinth-magic-dance,Magic Dance,David Bowie,Labyrinth,1986,The 80s Update Song.zip,Magic dance - David Bowie (with lyrics) from Labirinth.mp3,labyrinth-magic-dance.mp3,312.7
+1980s,,american-tail-somewhere-out-there,Somewhere Out There,Linda Ronstadt & James Ingram,An American Tail,1986,The 80s Update Song.zip,Somewhere Out There - Linda Ronstadt and James Ingram(with lyrics) 4.mp3,american-tail-somewhere-out-there.mp3,238.7
+1990s,,home-alone-somewhere-in-my-memory,Somewhere in My Memory,John Williams,Home Alone,1990,The 90s Update.zip,John williams - Somewhere In My Memory (Lyrics) 4.mp3,home-alone-somewhere-in-my-memory.mp3,201.0
+1990s,,mrs-doubtfire-dude-looks-like-a-lady,Dude (Looks Like a Lady),Aerosmith,Mrs. Doubtfire,1993,The 90s Update.zip,Aerosmith - Dude Looks Like A Lady (Lyrics) 4.mp3,mrs-doubtfire-dude-looks-like-a-lady.mp3,255.5
+1990s,,space-jam-space-jam,Space Jam,Quad City DJ's,Space Jam,1996,The 90s Update.zip,Quad City DJ's - Space Jam _ From Space Jam (Lyrics).mp3,space-jam-space-jam.mp3,305.1
+1990s,,home-alone-2-all-alone-on-christmas,All Alone on Christmas,Darlene Love,Home Alone 2: Lost in New York,1992,The 90s Update.zip,Darlene Love - All Alone On Christmas (Lyrics).mp3,home-alone-2-all-alone-on-christmas.mp3,256.1
+1990s,,fight-club-where-is-my-mind,Where Is My Mind?,Pixies,Fight Club,1999,The 90s Update.zip,Pixies - Where Is My Mind (Lyrics) 4.mp3,fight-club-where-is-my-mind.mp3,226.8
+1990s,,mighty-ducks-2-we-will-rock-you,We Will Rock You,Queen,D2: The Mighty Ducks,1994,The 90s Update.zip,Queen - We Will Rock You [Lyrics] 4.mp3,mighty-ducks-2-we-will-rock-you.mp3,122.2
+1990s,,cool-runnings-i-can-see-clearly-now,I Can See Clearly Now,Jimmy Cliff,Cool Runnings,1993,The 90s Update.zip,Jimmy Cliff - I Can See Clearly Now (Lyrics HD).mp3,cool-runnings-i-can-see-clearly-now.mp3,209.0
+1990s,,hook-flight-to-neverland,Flight to Neverland,John Williams,Hook,1991,The 90s Update.zip,John Williams - Flight to Neverland _ From the Soundtrack to _Hook_ by John Williams.mp3,hook-flight-to-neverland.mp3,286.1
+1990s,,free-willy-will-you-be-there,Will You Be There,Michael Jackson,Free Willy,1993,The 90s Update.zip,Michael Jackson - Will You Be There (Lyrics Video) 🎤.mp3,free-willy-will-you-be-there.mp3,217.0
+1990s,,sandlot-tequila,Tequila,The Champs,The Sandlot,1993,The 90s Update.zip,The Champs - Tequila (Lyrics)  #ListenSP.mp3,sandlot-tequila.mp3,132.8
+1990s,,matilda-send-me-on-my-way,Send Me on My Way,Rusted Root,Matilda,1996,The 90s Update.zip,Rusted Root - Send Me On My Way (lyrics).mp3,matilda-send-me-on-my-way.mp3,238.2
+1990s,,men-in-black-men-in-black,Men in Black,Will Smith,Men in Black,1997,The 90s Update.zip,Will Smith - Men In Black (Lyrics) 4.mp3,men-in-black-men-in-black.mp3,225.5
+1990s,,tmnt-turtle-power,Turtle Power!,Partners in Kryme,Teenage Mutant Ninja Turtles,1990,The 90s Update.zip,T-U-R-T-L-E POWER! with lyrics. - (partners in kryme.) (TMNT).mp3,tmnt-turtle-power.mp3,260.0
+1990s,,casper-caspers-lullaby,Casper's Lullaby,James Horner,Casper,1995,The 90s Update.zip,Casper Soundtrack HD - Casper's Lullaby.mp3,casper-caspers-lullaby.mp3,340.1
+2000s+,,fast-five-danza-kuduro,Danza Kuduro,Don Omar feat. Lucenzo,Fast Five,2011,The 2000s Update.zip,Don Omar - Danza Kuduro (Lyrics) ft. Lucenzo 4.mp3,fast-five-danza-kuduro.mp3,197.2
+2000s+,,daredevil-bring-me-to-life,Bring Me to Life,Evanescence,Daredevil,2003,The 2000s Update.zip,Evanescence - Bring Me To Life (lyrics) 4.mp3,daredevil-bring-me-to-life.mp3,222.6
+2000s+,,greatest-showman-the-greatest-show,The Greatest Show,Hugh Jackman & The Greatest Showman Cast,The Greatest Showman,2017,The 2000s Update.zip,"Hugh Jackman, The Greatest Showman Cast - The Greatest Show _ From The Greatest Showman (Lyrics).mp3",greatest-showman-the-greatest-show.mp3,302.2
+2000s+,,slumdog-millionaire-jai-ho,Jai Ho,A.R. Rahman & Sukhwinder Singh,Slumdog Millionaire,2008,The 2000s Update.zip,AR Rahman - Jai Ho [Lyrical Video] - Slumdog Millionaire..mp3,slumdog-millionaire-jai-ho.mp3,263.8
+2000s+,,pitch-perfect-cups-when-im-gone,Cups (When I'm Gone),Anna Kendrick,Pitch Perfect,2012,The 2000s Update.zip,Cups Pitch Perfect's When I'm Gone - Anna Kendrick (Lyrics) 🎵 4.mp3,pitch-perfect-cups-when-im-gone.mp3,131.5
+2000s+,,skyfall-skyfall,Skyfall,Adele,Skyfall,2012,The 2000s Update.zip,Adele - Skyfall (Lyrics) 4.mp3,skyfall-skyfall.mp3,284.5
+2000s+,,bourne-identity-extreme-ways,Extreme Ways,Moby,The Bourne Identity,2002,The 2000s Update.zip,Extreme Ways-Moby (Lyrics).mp3,bourne-identity-extreme-ways.mp3,239.9
+2000s+,,despicable-me-2-happy,Happy,Pharrell Williams,Despicable Me 2,2013,The 2000s Update.zip,Pharrell Williams - Happy (Lyrics).mp3,despicable-me-2-happy.mp3,243.9
+2000s+,,shrek-2-accidentally-in-love,Accidentally in Love,Counting Crows,Shrek 2,2004,The 2000s Update.zip,Counting Crows - Accidentally In Love (Lyric Video) 4.mp3,shrek-2-accidentally-in-love.mp3,250.6
+2000s+,,donnie-darko-mad-world,Mad World,Gary Jules,Donnie Darko,2001,The 2000s Update.zip,Mad World - Gary Jules (Lyrics) 4.mp3,donnie-darko-mad-world.mp3,182.1
+2000s+,,lego-movie-everything-is-awesome,Everything Is Awesome,Tegan and Sara feat. The Lonely Island,The LEGO Movie,2014,The 2000s Update.zip,Everything Is AWESOME!!! -- The LEGO® Movie -- Tegan and Sara feat. The Lonely Island 4.mp3,lego-movie-everything-is-awesome.mp3,164.0
+2000s+,,spider-man-2-vindicated,Vindicated,Dashboard Confessional,Spider-Man 2,2004,The 2000s Update.zip,Vindicated - Dashboard confessional (lyrics).mp3,spider-man-2-vindicated.mp3,197.4
+2000s+,,transformers-rotf-new-divide,New Divide,Linkin Park,Transformers: Revenge of the Fallen,2009,The 2000s Update.zip,Linkin Park - New Divide (Lyrics) 4.mp3,transformers-rotf-new-divide.mp3,267.9
+2000s+,Disney,moana-youre-welcome,You're Welcome,Dwayne Johnson,Moana,2016,Disney Songs.zip,Dwayne Johnson - You're Welcome (Lyrics) 4.mp3,moana-youre-welcome.mp3,168.1
+Pre-1980,Disney,mary-poppins-a-spoonful-of-sugar,A Spoonful of Sugar,Julie Andrews,Mary Poppins,1964,Disney Songs.zip,A Spoonful of Sugar  Lyrics.mp3,mary-poppins-a-spoonful-of-sugar.mp3,249.0
+Pre-1980,Disney,jungle-book-i-wanna-be-like-you,I Wan'na Be Like You,"Louis Prima, Phil Harris & Bruce Reitherman",The Jungle Book,1967,Disney Songs.zip,The Jungle Book   I Wanna Be Like You Lyrics 1080pHD htm.mp3,jungle-book-i-wanna-be-like-you.mp3,240.6
+2000s+,Disney,princess-and-frog-almost-there,Almost There,Anika Noni Rose,The Princess and the Frog,2009,Disney Songs.zip,Anika Noni Rose - Almost There (Lyrics) _And I am almost there_ Princess and the Frog _ Tiktok.mp3,princess-and-frog-almost-there.mp3,185.1
+1990s,Disney,hercules-go-the-distance,Go the Distance,Roger Bart,Hercules,1997,Disney Songs.zip,I Can Go The Distance - Hercules Lyrics 4.mp3,hercules-go-the-distance.mp3,202.6
+1990s,Disney,lion-king-be-prepared,Be Prepared,Jeremy Irons & Cast,The Lion King,1994,Disney Songs.zip,Be Prepared- The Lion King (lyrics) 4.mp3,lion-king-be-prepared.mp3,217.1
+2000s+,Disney,tangled-i-see-the-light,I See the Light,Mandy Moore & Zachary Levi,Tangled,2010,Disney Songs.zip,"I See The Light - Mandy Moore & Zachary Levi _OST. Tangled, Disney [LYRICS] 4.mp3",tangled-i-see-the-light.mp3,217.1
+2000s+,Disney,princess-and-frog-friends-on-the-other-side,Friends on the Other Side,Keith David,The Princess and the Frog,2009,Disney Songs.zip,Princess and the Frog - Friends on the Other Side (Sing-Along Lyrics).mp3,princess-and-frog-friends-on-the-other-side.mp3,215.1
+1980s,Disney,little-mermaid-kiss-the-girl,Kiss the Girl,Samuel E. Wright,The Little Mermaid,1989,Disney Songs.zip,Kiss the Girl - Samuel E. Wright (Lyrics).mp3,little-mermaid-kiss-the-girl.mp3,220.4
+Pre-1980,Disney,mary-poppins-supercalifragilisticexpialidocious,Supercalifragilisticexpialidocious,Julie Andrews & Dick Van Dyke,Mary Poppins,1964,Disney Songs.zip,Supercalifragilisticexpialidocious Song (Lyrics+Vietsub) - Dick Van Dyke & Julie Andrews.mp3,mary-poppins-supercalifragilisticexpialidocious.mp3,121.2
+1980s,Disney,little-mermaid-poor-unfortunate-souls,Poor Unfortunate Souls,Pat Carroll,The Little Mermaid,1989,Disney Songs.zip,_Poor Unfortunate Souls_ from The Little Mermaid with Lyrics.mp3,little-mermaid-poor-unfortunate-souls.mp3,275.4
+2000s+,Disney,frozen-love-is-an-open-door,Love Is an Open Door,Kristen Bell & Santino Fontana,Frozen,2013,Disney Songs.zip,Love Is An Open Door - Kristen Bell and Santino Fontana Lyric Video 4.mp3,frozen-love-is-an-open-door.mp3,128.1
+1990s,Disney,hercules-i-wont-say-im-in-love,I Won't Say (I'm in Love),Susan Egan & The Muses,Hercules,1997,Disney Songs.zip,I Won't Say I'm In Love lyrics 4.mp3,hercules-i-wont-say-im-in-love.mp3,140.3
+1990s,Disney,tarzan-son-of-man,Son of Man,Phil Collins,Tarzan,1999,Disney Songs.zip,Phil Collins - Son Of Man (Lyrics HD).mp3,tarzan-son-of-man.mp3,171.9
+1990s,Disney,aladdin-arabian-nights,Arabian Nights,Bruce Adler,Aladdin,1992,Disney Songs.zip,Arabian Nights- Aladdin (lyrics).mp3,aladdin-arabian-nights.mp3,81.3
+Pre-1980,Disney,jungle-book-the-bare-necessities,The Bare Necessities,Phil Harris & Bruce Reitherman,The Jungle Book,1967,Disney Songs.zip,"Phil Harris, Bruce Reitherman - The Bare Necessities (From _The Jungle Book__Sing-Along) 4.mp3",jungle-book-the-bare-necessities.mp3,174.7
+1990s,Disney,beauty-and-the-beast-belle,Belle,"Paige O'Hara, Richard White & Cast",Beauty and the Beast,1991,Disney Songs.zip,Belle Beauty and the beast lyrics.mp3,beauty-and-the-beast-belle.mp3,287.1
+1980s,Disney,little-mermaid-under-the-sea,Under the Sea,Samuel E. Wright,The Little Mermaid,1989,Disney Songs.zip,Under the Sea Lyrics 4.mp3,little-mermaid-under-the-sea.mp3,190.3
+2000s+,Disney,tangled-when-will-my-life-begin,When Will My Life Begin?,Mandy Moore,Tangled,2010,Disney Songs.zip,When Will My Life Begin - Mandy Moore (Lyrics) 🎵 4.mp3,tangled-when-will-my-life-begin.mp3,150.3
+2000s+,Disney,lilo-and-stitch-hawaiian-roller-coaster-ride,Hawaiian Roller Coaster Ride,Mark Kealiʻi Hoʻomalu & Kamehameha Schools Children's Chorus,Lilo & Stitch,2002,Disney Songs.zip,Hawaiian Roller Coaster Ride-Mark Keali'i Ho'omalu and Kamehameha Schools Children's Chorus.mp3,lilo-and-stitch-hawaiian-roller-coaster-ride.mp3,213.1
+1990s,Disney,aladdin-one-jump-ahead,One Jump Ahead,Brad Kane,Aladdin,1992,Disney Songs.zip,Aladdin - One Jump Ahead (with lyrics).mp3,aladdin-one-jump-ahead.mp3,203.0
+1990s,Disney,aladdin-prince-ali,Prince Ali,Robin Williams,Aladdin,1992,Disney Songs.zip,Aladdin - Prince Ali (with lyrics).mp3,aladdin-prince-ali.mp3,238.0
+2000s+,Disney,frozen-let-it-go,Let It Go,Idina Menzel,Frozen,2013,Disney Songs.zip,Let It Go - Idina Menzel (Lyrics) 🎵 4.mp3,frozen-let-it-go.mp3,221.4
+1990s,Disney,beauty-and-the-beast-gaston,Gaston,"Richard White, Jesse Corti & Cast",Beauty and the Beast,1991,Disney Songs.zip,Gaston - Beauty And The Beast Lyrics HD.mp3,beauty-and-the-beast-gaston.mp3,226.1
+2000s+,Disney,encanto-we-dont-talk-about-bruno,We Don't Talk About Bruno,Encanto Cast,Encanto,2021,Disney Songs.zip,We don't talk about Bruno - Encanto (Lyrics).mp3,encanto-we-dont-talk-about-bruno.mp3,213.8
+1980s,Disney,little-mermaid-part-of-your-world,Part of Your World,Jodi Benson,The Little Mermaid,1989,Disney Songs.zip,Jodi Benson - Part of Your World - Lyrics (The Little Mermaid) 4.mp3,little-mermaid-part-of-your-world.mp3,186.6
+1990s,Disney,hercules-zero-to-hero,Zero to Hero,The Muses,Hercules,1997,Disney Songs.zip,Zero to Hero - Hercules (LYRICS).mp3,hercules-zero-to-hero.mp3,139.0
+1990s,Disney,tarzan-two-worlds,Two Worlds,Phil Collins,Tarzan,1999,Disney Songs.zip,"Tarzan, Phil Collins - Two Worlds (Lyric Video).mp3",tarzan-two-worlds.mp3,197.4
+2000s+,Disney,moana-how-far-ill-go,How Far I'll Go,Auliʻi Cravalho,Moana,2016,Disney Songs.zip,Auli'i Cravalho - How Far I'll Go (Lyrics) 4.mp3,moana-how-far-ill-go.mp3,221.8
+2000s+,,tokyo-drift-tokyo-drift-fast-and-furious,Tokyo Drift (Fast & Furious),Teriyaki Boyz,The Fast and the Furious: Tokyo Drift,2006,,Tokyo Drift (Fast & Furious) (From _The Fast And The Furious_ Tokyo Drift_ Soundtrack) 4.mp3,tokyo-drift-tokyo-drift-fast-and-furious.mp3,255.2

@@ -28,9 +28,18 @@
   --screen-buffer:clamp(10px,1vw,18px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#090b27;color:var(--white);font-family:Arial,Helvetica,sans-serif}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  min-height:0;
+  overflow:hidden;
+  background:#090b27;
+  color:var(--white);
+  font-family:Arial,Helvetica,sans-serif
+}
 body{
-  min-height:100vh;
+  height:100vh;
   padding:
     max(var(--screen-buffer),env(safe-area-inset-top))
     max(var(--screen-buffer),env(safe-area-inset-right))
@@ -47,12 +56,15 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid 
 button:disabled{cursor:not-allowed;opacity:.42}
 .app{
   width:min(100%,1900px);
-  min-height:calc(100vh - (var(--screen-buffer) * 2));
+  height:calc(100vh - (var(--screen-buffer) * 2));
+  min-height:0;
+  max-height:calc(100vh - (var(--screen-buffer) * 2));
   margin:0 auto;
-  padding:0 0 8px;
+  padding:0;
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:clamp(7px,.8vh,12px);
+  overflow:hidden;
 }
 
 /* ---------- Header and moving perimeter lights ---------- */
@@ -85,12 +97,12 @@ button:disabled{cursor:not-allowed;opacity:.42}
 @keyframes chaseV{to{background-position:0 40px}}
 .marquee-inner{
   position:relative;
-  min-height:96px;
+  min-height:clamp(72px,9vh,96px);
   display:flex;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:15px 28px;
+  padding:clamp(9px,1.4vh,15px) 28px;
   overflow:hidden;
   border:4px solid #ffec9d;
   border-radius:15px;
@@ -212,8 +224,9 @@ button:disabled{cursor:not-allowed;opacity:.42}
   position:relative;
   z-index:1;
   flex:1;
-  min-height:420px;
-  padding:52px 28px 20px;
+  min-height:0;
+  overflow:hidden;
+  padding:clamp(38px,5.5vh,52px) 28px clamp(10px,1.8vh,20px);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -259,7 +272,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   background:linear-gradient(180deg,#fbfdff,#dae6ff);
   color:#0a205f;
   font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(38px,5vw,84px);
+  font-size:clamp(30px,min(5vw,7vh),84px);
   line-height:.96;
   letter-spacing:.018em;
   text-transform:uppercase;
@@ -269,7 +282,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 .clue.hidden{letter-spacing:.13em;color:#17265e}
 .artist{
   margin-top:14px;
-  font-size:clamp(16px,1.7vw,28px);
+  font-size:clamp(13px,min(1.7vw,2.6vh),28px);
   font-weight:900;
   text-transform:uppercase;
   letter-spacing:.055em;
@@ -278,7 +291,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 }
 .play-block{
   width:min(920px,96%);
-  margin-top:22px;
+  margin-top:clamp(10px,2vh,22px);
   display:grid;
   grid-template-columns:auto minmax(0,1fr) 112px;
   gap:12px;
@@ -286,14 +299,14 @@ button:disabled{cursor:not-allowed;opacity:.42}
 }
 .play-btn{
   min-width:235px;
-  min-height:74px;
+  min-height:clamp(52px,7vh,74px);
   padding:10px 22px;
   border:5px solid #fff0a0;
   border-radius:999px;
   color:#311600;
   background:radial-gradient(circle at 50% 25%,#fff8bc,#ffd04f 57%,#d79512);
   font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(23px,2.1vw,34px);
+  font-size:clamp(20px,min(2.1vw,3.2vh),34px);
   letter-spacing:.07em;
   text-transform:uppercase;
   box-shadow:inset 0 5px 4px rgba(255,255,255,.58),0 7px 0 #794b00,0 13px 22px rgba(0,0,0,.34)
@@ -375,19 +388,58 @@ button:disabled{cursor:not-allowed;opacity:.42}
 .stage-controls{
   position:relative;z-index:2;
   flex:0 0 auto;
-  padding:10px 12px 12px;
+  padding:8px 10px 10px;
   display:grid;
-  grid-template-columns:.85fr 1.25fr 1fr 1fr;
-  gap:8px;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:7px;
   border-top:3px solid #c99325;
   background:linear-gradient(180deg,#361657,#190f3c)
 }
-.action-btn{padding:8px 12px;font-size:clamp(11px,.9vw,15px)}
+.action-btn{
+  min-height:clamp(36px,4.8vh,44px);
+  padding:6px 8px;
+  font-size:clamp(9px,min(.82vw,1.45vh),14px)
+}
 .action-btn.new-game{
   border-color:#ef9d69;
   color:#ffe4cf;
   background:linear-gradient(180deg,#8f3540,#56202e);
   box-shadow:inset 0 2px 0 rgba(255,255,255,.12),0 3px 0 #32101a
+}
+
+
+.host-answer-key{
+  width:min(980px,96%);
+  margin-top:clamp(8px,1.3vh,14px);
+  display:grid;
+  grid-template-columns:1.1fr 1fr 1.2fr;
+  gap:7px;
+}
+.host-answer-key>div{
+  min-width:0;
+  padding:7px 9px;
+  border:1px solid rgba(255,228,132,.35);
+  border-radius:8px;
+  background:rgba(5,15,57,.6);
+  text-align:left;
+}
+.host-answer-key span{
+  display:block;
+  margin-bottom:2px;
+  color:#d5ddf4;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase
+}
+.host-answer-key strong{
+  display:block;
+  overflow:hidden;
+  color:#fff0a8;
+  font-size:clamp(10px,min(.9vw,1.45vh),14px);
+  line-height:1.2;
+  text-overflow:ellipsis;
+  white-space:nowrap
 }
 
 /* ---------- Dynamic contestants ---------- */
@@ -411,7 +463,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 .contestants{
   flex:1;
   min-height:0;
-  padding:10px;
+  padding:clamp(5px,.8vh,10px);
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
   grid-auto-rows:minmax(0,1fr);
@@ -451,7 +503,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   border-radius:7px;
   background:#05070d;
   color:#ffef67;
-  font:900 clamp(40px,4vw,68px) "Courier New",monospace;
+  font:900 clamp(30px,min(4vw,6vh),68px) "Courier New",monospace;
   line-height:.88;
   text-shadow:0 0 8px #a56a00
 }
@@ -467,13 +519,13 @@ button:disabled{cursor:not-allowed;opacity:.42}
 /* ---------- Minimal footer ---------- */
 .footer{
   flex:0 0 auto;
-  min-height:28px;
+  min-height:clamp(20px,2.7vh,28px);
   display:flex;
   align-items:center;
   justify-content:center;
   gap:9px 18px;
   flex-wrap:wrap;
-  padding:5px 10px;
+  padding:2px 10px;
   color:#bfc9e7;
   font-size:9px;
   font-weight:900;
@@ -607,7 +659,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   text-transform:uppercase
 }
 .choice span{display:block;color:#d5ddf4;font-size:12px;line-height:1.45}
-.era-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.era-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .era-choice{
   min-height:92px;
   border:3px solid #9d7a30;
@@ -662,49 +714,101 @@ button:disabled{cursor:not-allowed;opacity:.42}
 }
 @media(hover:hover){.song-row:hover{background:rgba(255,255,255,.05)}}
 
-/* ---------- Responsive ---------- */
+/* ---------- Responsive / viewport fit ---------- */
 @media(min-width:1500px){
-  .app{padding-top:14px}
-  .stage-main{min-height:510px}
   .game-floor{grid-template-columns:minmax(0,1fr) 420px}
 }
+@media(max-height:820px){
+  .marquee{padding:7px;border-radius:20px}
+  .marquee-inner{min-height:64px;padding:7px 20px}
+  .brand h1{font-size:clamp(38px,4.2vw,66px)}
+  .brand p{margin-top:4px}
+  .host-btn{min-height:36px;padding:4px 7px;font-size:9px}
+  .stage-main{padding-top:34px}
+  .prompt{margin-bottom:8px;padding:5px 13px}
+  .clue{padding:12px 16px}
+  .artist{margin-top:7px}
+  .play-block{margin-top:9px}
+  .host-answer-key{margin-top:7px}
+  .score-title{padding:6px 9px;font-size:11px}
+  .contestant{padding:6px}
+  .contestant-name{min-height:24px;font-size:11px}
+  .score{margin:5px 0 6px;padding:5px 3px}
+  .footer{font-size:8px}
+}
 @media(max-width:1100px){
-  .app{min-height:auto}
-  .game-floor{grid-template-columns:1fr}
-  .contestants{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));grid-auto-rows:auto}
-  .contestant{min-height:165px}
+  .host-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .game-floor{
+    grid-template-columns:1fr;
+    grid-template-rows:minmax(0,1fr) minmax(112px,24vh);
+  }
+  .score-panel{min-height:0}
+  .score-title{padding:5px 8px}
+  .contestants{
+    grid-template-columns:repeat(auto-fit,minmax(105px,1fr));
+    grid-template-rows:1fr;
+    grid-auto-rows:1fr;
+    gap:5px
+  }
+  .contestant{min-height:0;padding:5px}
+  .contestant-name{min-height:22px;font-size:10px}
+  .score{font-size:clamp(25px,4.5vw,44px);margin:4px 0}
+  .score-btn{min-height:31px;font-size:10px}
 }
 @media(max-width:760px){
-  :root{--screen-buffer:8px}
-  .app{width:100%;padding-top:0}
-  .marquee{padding:8px;border-radius:18px}
-  .marquee-inner{min-height:84px;padding:13px 10px;border-width:3px}
-  .brand h1{font-size:52px}
-  .brand p{font-size:10px}
-  .host-strip{grid-template-columns:1fr 1fr}
-  .full-btn{grid-column:1/-1}
-  .stage-main{padding:50px 8px 18px;min-height:470px}
-  .round-meta{left:8px;right:8px;top:9px;font-size:8px}
-  .clue{width:100%;padding:17px 8px;border-width:4px;font-size:clamp(32px,11vw,54px)}
-  .artist{font-size:17px}
-  .play-block{width:100%;grid-template-columns:1fr;gap:9px}
-  .play-btn{width:100%;min-width:0;min-height:68px;font-size:28px}
-  .audio-state{font-size:10px}
-  .stage-controls{grid-template-columns:1fr}
-  .contestants{grid-template-columns:repeat(2,minmax(0,1fr))}
+  :root{--screen-buffer:7px}
+  .app{width:100%}
+  .marquee{padding:6px;border-radius:16px}
+  .marquee-inner{min-height:58px;padding:6px 8px;border-width:3px}
+  .brand .kicker{font-size:8px}
+  .brand h1{font-size:clamp(36px,10vw,50px)}
+  .brand p{display:none}
+  .host-strip{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+  .host-btn{min-height:34px;padding:3px 5px;font-size:8px}
+  .full-btn{min-width:0}
+  .game-floor{grid-template-rows:minmax(0,1fr) minmax(105px,23vh)}
+  .stage-main{padding:31px 7px 6px}
+  .round-meta{left:7px;right:7px;top:7px;font-size:7px}
+  .round-meta span{padding:3px 5px}
+  .prompt{font-size:8px;padding:4px 8px;margin-bottom:6px}
+  .clue{width:100%;padding:10px 6px;border-width:3px;font-size:clamp(28px,min(10vw,6vh),48px)}
+  .artist{font-size:12px;margin-top:5px}
+  .play-block{width:100%;grid-template-columns:1fr 1.2fr 72px;gap:6px;margin-top:7px}
+  .play-btn{width:100%;min-width:0;min-height:42px;padding:5px 8px;border-width:3px;font-size:16px}
+  .progress{height:16px}
+  .progress-meta{font-size:7px}
+  .timer{font-size:11px}
+  .audio-state{padding:6px 4px;font-size:7px}
+  .host-answer-key{width:100%;margin-top:6px;gap:4px}
+  .host-answer-key>div{padding:4px 5px}
+  .host-answer-key span{font-size:6px}
+  .host-answer-key strong{font-size:8px}
+  .answer{margin-top:7px;padding-top:7px}
+  .answer-film{font-size:clamp(28px,min(9vw,6vh),46px)}
+  .answer-song{font-size:10px;margin-top:4px}
+  .stage-controls{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px}
+  .action-btn{min-height:31px;padding:3px 4px;font-size:8px}
+  .contestants{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+  .score-title{font-size:9px}
+  .contestant-name{font-size:8px;min-height:16px}
+  .score{font-size:24px;margin:2px 0;padding:3px}
+  .score-controls{gap:3px}
+  .score-btn{min-height:25px;padding:2px;font-size:8px}
   .form-grid,.names-grid{grid-template-columns:1fr}
   .choice-grid{grid-template-columns:1fr}
-  .era-grid{grid-template-columns:1fr 1fr}
+  .era-grid{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
   .song-tools{grid-template-columns:1fr}
-  .song-row{grid-template-columns:48px minmax(0,1fr) 88px}
+  .song-row{grid-template-columns:45px minmax(0,1fr) 82px}
   .song-film{display:none}
+  .footer{font-size:7px;gap:4px 8px}
 }
 @media(max-width:430px){
-  .brand h1{font-size:44px}
-  .host-strip{grid-template-columns:1fr}
-  .full-btn{grid-column:auto}
-  .contestants{grid-template-columns:1fr}
-  .era-grid{grid-template-columns:1fr}
+  .host-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .game-floor{grid-template-rows:minmax(0,1fr) minmax(120px,25vh)}
+  .play-block{grid-template-columns:1fr 1fr}
+  .audio-state{grid-column:1/-1}
+  .host-answer-key{grid-template-columns:1fr 1fr}
+  .host-answer-key>div:last-child{grid-column:1/-1}
 }
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{animation:none!important;transition:none!important}
@@ -757,6 +861,12 @@ button:disabled{cursor:not-allowed;opacity:.42}
           <div class="audio-state" id="audioState">No Track</div>
         </div>
 
+        <div class="host-answer-key" id="hostAnswerKey" aria-label="Host answer key">
+          <div><span>Song</span><strong id="hostSong">No round loaded</strong></div>
+          <div><span>Artist</span><strong id="hostArtist">—</strong></div>
+          <div><span>Movie</span><strong id="hostMovie">—</strong></div>
+        </div>
+
         <div class="answer" id="answer">
           <div class="answer-film" id="answerFilm"></div>
           <div class="answer-song" id="answerSong"></div>
@@ -765,7 +875,9 @@ button:disabled{cursor:not-allowed;opacity:.42}
 
       <div class="stage-controls">
         <button class="action-btn new-game" id="newGameBtn">New Game</button>
+        <button class="action-btn" id="previousBtn" disabled>Previous Track</button>
         <button class="action-btn primary" id="nextBtn">Next Round</button>
+        <button class="action-btn" id="answerTimerBtn" disabled>Start 5s Timer</button>
         <button class="action-btn" id="revealBtn" disabled>Reveal Answer</button>
         <button class="action-btn" id="replayBtn" disabled>Replay Clip</button>
       </div>
@@ -778,7 +890,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
   </main>
 
   <footer class="footer">
-    <span>Reel Recall <b>v0.6.0</b></span>
+    <span>Reel Recall <b>v0.8.1</b></span>
     <span><b id="footerTracks">54</b> Tracks</span>
     <span>Round <b id="footerRound">0</b></span>
     <span>Mode <b id="footerMode">Name Movie</b></span>
@@ -817,6 +929,8 @@ button:disabled{cursor:not-allowed;opacity:.42}
             <option value="15" selected>15 seconds</option>
             <option value="20">20 seconds</option>
             <option value="30">30 seconds</option>
+            <option value="45">45 seconds</option>
+            <option value="60">60 seconds</option>
           </select>
         </div>
         <div class="field">
@@ -870,7 +984,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 <div class="modal-backdrop" id="eraModal">
   <section class="modal" role="dialog" aria-modal="true" aria-labelledby="eraTitle">
     <div class="modal-head">
-      <h2 id="eraTitle">Era Selection</h2>
+      <h2 id="eraTitle">Era / Theme Selection</h2>
       <button class="close-btn" data-close="eraModal" aria-label="Close era selection">×</button>
     </div>
     <div class="modal-body">
@@ -879,6 +993,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
         <button class="era-choice" data-era="1980s">1980s</button>
         <button class="era-choice" data-era="1990s">1990s</button>
         <button class="era-choice" data-era="2000s+">2000s+</button>
+        <button class="era-choice" data-era="Disney">Disney</button>
       </div>
     </div>
     <div class="modal-actions">
@@ -902,6 +1017,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
           <option value="1980s">1980s</option>
           <option value="1990s">1990s</option>
           <option value="2000s+">2000s+</option>
+          <option value="Disney">Disney</option>
         </select>
       </div>
       <div class="song-list" id="songList"></div>
@@ -934,7 +1050,7 @@ button:disabled{cursor:not-allowed;opacity:.42}
 <script>
 (()=>{
 "use strict";
-const VERSION="0.6.0";
+const VERSION="0.8.1";
 const TRACKS=Array.isArray(window.REEL_RECALL_TRACKS)?window.REEL_RECALL_TRACKS:[];
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
@@ -953,6 +1069,8 @@ let scores=Array(6).fill(0);
 let current=null;
 let round=0;
 let used=new Set();
+let roundHistory=[];
+let historyIndex=-1;
 let pendingMode=settings.mode;
 let pendingEra=settings.era;
 let timerId=null;
@@ -960,6 +1078,10 @@ let clipTimeout=null;
 let clipStartPerf=0;
 let elapsed=0;
 let playback="idle";
+let answerCountdownTimer=null;
+let answerCountdownHideTimer=null;
+let answerCountdownActive=false;
+let answerCountdownValue=null;
 
 const DISPLAY_CHANNEL_NAME="reel-recall-player-display-v1";
 const DISPLAY_STORAGE_KEY="reel_recall_player_display_state";
@@ -1015,10 +1137,16 @@ function playerDisplaySnapshot(){
     timer:$("#timer")?.textContent||"0.0s",
     audioState:$("#audioState")?.textContent||"No Track",
     playback,
+    contestants:Array.from({length:settings.contestantCount},(_,i)=>({
+      name:settings.names[i]||`${settings.contestantType==="team"?"Team":"Player"} ${i+1}`,
+      score:scores[i]
+    })),
+    answerCountdownActive,
+    answerCountdownValue,
     answerVisible:Boolean(answer?.classList.contains("show")),
-    answerFilm:current?.film||"",
-    answerYear:current?.year||"",
-    answerSong:current?`${current.song} · ${current.artist}`:""
+    answerFilm:answer?.classList.contains("show")?(current?.film||""):"",
+    answerYear:answer?.classList.contains("show")?(current?.year||""):"",
+    answerSong:answer?.classList.contains("show")&&current?`${current.song} · ${current.artist}`:""
   };
 }
 function publishPlayerDisplay(force=false){
@@ -1087,6 +1215,7 @@ function renderContestants(){
       </div>`;
     holder.appendChild(card);
   }
+  publishPlayerDisplay(true);
 }
 function renderNameFields(){
   const holder=$("#nameFields");
@@ -1107,16 +1236,21 @@ function renderModeChoices(){
 function renderEraChoices(){
   $$("#eraChoices .era-choice").forEach(b=>b.classList.toggle("selected",b.dataset.era===pendingEra));
 }
+function trackMatchesSelection(track,selection){
+  if(selection==="all")return true;
+  if(selection==="Disney")return Array.isArray(track.themes)&&track.themes.includes("Disney");
+  return track.era===selection;
+}
 function renderSongList(){
   const q=$("#songSearch").value.trim().toLowerCase();
   const era=$("#songEraFilter").value;
   const items=TRACKS.filter(t=>{
     const hay=`${t.song} ${t.artist} ${t.film}`.toLowerCase();
-    return (!q||hay.includes(q)) && (era==="all"||t.era===era);
+    return (!q||hay.includes(q)) && trackMatchesSelection(t,era);
   });
   $("#songList").innerHTML=items.map(t=>`
     <div class="song-row ${current?.id===t.id?"selected":""}" data-song-id="${t.id}" tabindex="0" role="button">
-      <div class="song-era">${esc(t.era)}</div>
+      <div class="song-era">${esc((Array.isArray(t.themes)&&t.themes.includes("Disney"))?`${t.era} · Disney`:t.era)}</div>
       <div class="song-main"><strong>${esc(t.song)}</strong><span>${esc(t.artist)}</span></div>
       <div class="song-film"><strong>${esc(t.film)}</strong><span>${t.year}</span></div>
       <button class="song-play" data-song-id="${t.id}">Play Round</button>
@@ -1124,23 +1258,87 @@ function renderSongList(){
 }
 
 function eligibleTracks(){
-  return settings.era==="all"?TRACKS:TRACKS.filter(t=>t.era===settings.era);
+  return TRACKS.filter(t=>trackMatchesSelection(t,settings.era));
+}
+function updateHostAnswerKey(){
+  $("#hostSong").textContent=current?.song||"No round loaded";
+  $("#hostArtist").textContent=current?.artist||"—";
+  $("#hostMovie").textContent=current?`${current.film} (${current.year})`:"—";
+}
+function updateNavigationButtons(){
+  $("#previousBtn").disabled=historyIndex<=0;
+}
+function clearAnswerCountdown(publish=true){
+  clearInterval(answerCountdownTimer);
+  clearTimeout(answerCountdownHideTimer);
+  answerCountdownTimer=null;
+  answerCountdownHideTimer=null;
+  answerCountdownActive=false;
+  answerCountdownValue=null;
+  const btn=$("#answerTimerBtn");
+  if(btn){
+    btn.textContent="Start 5s Timer";
+    btn.disabled=!current;
+  }
+  if(publish)publishPlayerDisplay(true);
+}
+function startAnswerCountdown(){
+  if(!current)return;
+  if(playback==="playing")pauseAudio();
+  clearInterval(answerCountdownTimer);
+  clearTimeout(answerCountdownHideTimer);
+  answerCountdownActive=true;
+  answerCountdownValue=5;
+  const btn=$("#answerTimerBtn");
+  btn.disabled=false;
+  btn.textContent="Reset Timer (5)";
+  publishPlayerDisplay(true);
+
+  answerCountdownTimer=setInterval(()=>{
+    answerCountdownValue=Math.max(0,(answerCountdownValue??5)-1);
+    btn.textContent=answerCountdownValue>0?`Reset Timer (${answerCountdownValue})`:"Reset Timer";
+    publishPlayerDisplay(true);
+    if(answerCountdownValue<=0){
+      clearInterval(answerCountdownTimer);
+      answerCountdownTimer=null;
+      answerCountdownHideTimer=setTimeout(()=>clearAnswerCountdown(true),700);
+    }
+  },1000);
+}
+function navigateHistory(direction){
+  const targetIndex=historyIndex+direction;
+  if(targetIndex<0||targetIndex>=roundHistory.length)return false;
+  historyIndex=targetIndex;
+  const track=TRACKS.find(t=>t.id===roundHistory[historyIndex]);
+  if(!track)return false;
+  loadRound(track,false,"history");
+  return true;
+}
+function previousTrack(){
+  navigateHistory(-1);
 }
 function chooseRandom(){
+  if(historyIndex<roundHistory.length-1){
+    navigateHistory(1);
+    return;
+  }
   const pool=eligibleTracks();
   if(!pool.length)return;
   let available=pool.filter(t=>!used.has(t.id));
   if(!available.length){used.clear();available=pool}
   const t=available[Math.floor(Math.random()*available.length)];
   used.add(t.id);
-  loadRound(t,false);
+  loadRound(t,false,"append");
 }
 function startNewGame(){
   stopAudio(true);
 
+  clearAnswerCountdown(false);
   current=null;
   round=0;
   used.clear();
+  roundHistory=[];
+  historyIndex=-1;
   scores=Array(6).fill(0);
 
   const audio=$("#audio");
@@ -1160,6 +1358,9 @@ function startNewGame(){
   $("#answerSong").textContent="";
   $("#revealBtn").disabled=true;
   $("#replayBtn").disabled=true;
+  $("#answerTimerBtn").disabled=true;
+  updateHostAnswerKey();
+  updateNavigationButtons();
 
   elapsed=0;
   resetProgress();
@@ -1191,19 +1392,32 @@ function applyRoundPresentation(){
   }
   $("#answerFilm").innerHTML=`${esc(current.film)} <span class="answer-year">(${current.year})</span>`;
   $("#answerSong").textContent=`${current.song} · ${current.artist}`;
+  updateHostAnswerKey();
   publishPlayerDisplay(true);
 }
-function loadRound(track,autoplay){
+function loadRound(track,autoplay,historyMode="append"){
+  clearAnswerCountdown(false);
   stopAudio(true);
+
+  if(historyMode==="append"){
+    if(historyIndex<roundHistory.length-1){
+      roundHistory=roundHistory.slice(0,historyIndex+1);
+    }
+    roundHistory.push(track.id);
+    historyIndex=roundHistory.length-1;
+  }
+
   current=track;
-  round++;
+  round=Math.max(1,historyIndex+1);
   used.add(track.id);
   $("#footerRound").textContent=round;
   $("#revealBtn").disabled=false;
   $("#replayBtn").disabled=false;
+  $("#answerTimerBtn").disabled=false;
   $("#roundStatus").textContent="Round Ready";
   applyRoundPresentation();
   configureAudio();
+  updateNavigationButtons();
   renderSongList();
   closeAll();
   publishPlayerDisplay(true);
@@ -1239,6 +1453,7 @@ function setAudioState(state,label){
 }
 function playClip(restart){
   if(!current)return;
+  clearAnswerCountdown(false);
   clearTimeout(clipTimeout);clearInterval(timerId);
   const audio=$("#audio");
   const cue=Number(current.start_seconds)||0;
@@ -1257,10 +1472,14 @@ function playClip(restart){
 }
 function pauseAudio(){
   if(playback!=="playing")return;
-  elapsed=Math.min(settings.clipLength,(performance.now()-clipStartPerf)/1000);
+  const audio=$("#audio");
+  const cue=Number(current?.start_seconds)||0;
+  const actualElapsed=Number.isFinite(audio.currentTime)?Math.max(0,audio.currentTime-cue):NaN;
+  const perfElapsed=(performance.now()-clipStartPerf)/1000;
+  elapsed=Math.min(settings.clipLength,Number.isFinite(actualElapsed)?actualElapsed:perfElapsed);
   clearTimeout(clipTimeout);clipTimeout=null;
   clearInterval(timerId);timerId=null;
-  $("#audio").pause();
+  audio.pause();
   updateProgress(true);
   setAudioState("paused","Paused");
   $("#roundStatus").textContent="Music Paused";
@@ -1309,6 +1528,7 @@ function resetProgress(){
 }
 function reveal(){
   if(!current)return;
+  clearAnswerCountdown(false);
   $("#answer").classList.add("show");
   if(settings.mode==="both"){
     $("#clue").className="clue";
@@ -1322,6 +1542,7 @@ function changeScore(index,dir){
   scores[index]+=settings.scoreStep*dir;
   const el=$(`[data-score-display="${index}"]`);
   if(el)el.textContent=scores[index];
+  publishPlayerDisplay(true);
 }
 
 function initSettingsModal(){
@@ -1363,6 +1584,7 @@ function saveEra(){
 function resetScores(){
   scores=Array(6).fill(0);
   renderContestants();
+  publishPlayerDisplay(true);
 }
 
 function bind(){
@@ -1393,19 +1615,21 @@ function bind(){
   $("#songList").addEventListener("click",e=>{
     const row=e.target.closest("[data-song-id]");if(!row)return;
     const track=TRACKS.find(t=>t.id===row.dataset.songId);
-    if(track)loadRound(track,true);
+    if(track)loadRound(track,true,"append");
   });
   $("#songList").addEventListener("keydown",e=>{
     if((e.key==="Enter"||e.key===" ")&&e.target.closest("[data-song-id]")){
       e.preventDefault();
       const track=TRACKS.find(t=>t.id===e.target.closest("[data-song-id]").dataset.songId);
-      if(track)loadRound(track,true);
+      if(track)loadRound(track,true,"append");
     }
   });
 
   $("#newGameBtn").addEventListener("click",()=>openModal("newGameModal"));
   $("#confirmNewGameBtn").addEventListener("click",startNewGame);
+  $("#previousBtn").addEventListener("click",previousTrack);
   $("#nextBtn").addEventListener("click",chooseRandom);
+  $("#answerTimerBtn").addEventListener("click",startAnswerCountdown);
   $("#playBtn").addEventListener("click",togglePlay);
   $("#replayBtn").addEventListener("click",replayClip);
   $("#revealBtn").addEventListener("click",reveal);
@@ -1424,6 +1648,8 @@ function bind(){
     if(e.code==="Space"){e.preventDefault();togglePlay()}
     if(e.key.toLowerCase()==="g")openModal("newGameModal");
     if(e.key.toLowerCase()==="d")openPlayerDisplay();
+    if(e.key.toLowerCase()==="p")previousTrack();
+    if(e.key.toLowerCase()==="t")startAnswerCountdown();
     if(e.key.toLowerCase()==="n")chooseRandom();
     if(e.key.toLowerCase()==="r")reveal();
     if(e.key.toLowerCase()==="s")openModal("songsModal");
@@ -1435,6 +1661,8 @@ function init(){
   renderHeaderState();
   renderContestants();
   renderSongList();
+  updateHostAnswerKey();
+  updateNavigationButtons();
   setAudioState("idle","No Track");
   bind();
 }
