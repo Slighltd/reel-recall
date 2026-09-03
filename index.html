@@ -1,1289 +1,250 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#16104b">
-<title>Reel Recall</title>
-<style>
-:root{
-  --ink:#071124;
-  --navy:#08184a;
-  --navy2:#10296f;
-  --blue:#1a49ad;
-  --purple:#4a176f;
-  --magenta:#8d1e78;
-  --red:#c52940;
-  --gold:#efbb3d;
-  --gold2:#ffe39a;
-  --cream:#fff4bb;
-  --white:#fffdf4;
-  --muted:#cbd4ef;
-  --cyan:#76e8ff;
-  --good:#72e58b;
-  --bad:#ff8181;
-  --line:rgba(255,255,255,.18);
-  --shadow:0 16px 42px rgba(0,0,0,.42);
-  --radius:20px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:#090b27;color:var(--white);font-family:Arial,Helvetica,sans-serif}
-body{
-  background:
-    radial-gradient(circle at 12% 5%,rgba(231,46,165,.24),transparent 28%),
-    radial-gradient(circle at 86% 4%,rgba(42,102,255,.27),transparent 31%),
-    linear-gradient(145deg,#080a24 0%,#1a1050 45%,#071440 100%);
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--cream);outline-offset:3px}
-button:disabled{cursor:not-allowed;opacity:.42}
-.app{
-  width:min(98vw,1900px);
-  min-height:100vh;
-  margin:0 auto;
-  padding:12px 0 8px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* ---------- Header and moving perimeter lights ---------- */
-.marquee{
-  position:relative;
-  overflow:hidden;
-  flex:0 0 auto;
-  border:4px solid #b47a0d;
-  border-radius:25px;
-  padding:11px;
-  background:#ba8012;
-  box-shadow:0 7px 0 #674203,0 17px 38px rgba(0,0,0,.42);
-}
-.light-strip{position:absolute;z-index:4;pointer-events:none;opacity:.72;filter:drop-shadow(0 0 3px rgba(255,231,135,.7))}
-.light-strip.top,.light-strip.bottom{
-  left:13px;right:13px;height:10px;
-  background-image:radial-gradient(circle at 5px 5px,#fff9cf 0 2px,#ffd86a 2.5px 3.5px,#9a6400 4px 4.7px,transparent 5px);
-  background-size:20px 10px;
-  animation:chaseH 2.6s linear infinite;
-}
-.light-strip.top{top:2px}.light-strip.bottom{bottom:2px;animation-direction:reverse}
-.light-strip.left,.light-strip.right{
-  top:13px;bottom:13px;width:10px;
-  background-image:radial-gradient(circle at 5px 5px,#fff9cf 0 2px,#ffd86a 2.5px 3.5px,#9a6400 4px 4.7px,transparent 5px);
-  background-size:10px 20px;
-  animation:chaseV 2.6s linear infinite;
-}
-.light-strip.left{left:2px;animation-direction:reverse}.light-strip.right{right:2px}
-@keyframes chaseH{to{background-position:40px 0}}
-@keyframes chaseV{to{background-position:0 40px}}
-.marquee-inner{
-  position:relative;
-  min-height:96px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:15px 28px;
-  overflow:hidden;
-  border:4px solid #ffec9d;
-  border-radius:15px;
-  background:linear-gradient(128deg,#17217b 0%,#6d1974 55%,#bd2a47 100%);
-}
-.marquee-inner::before,.marquee-inner::after{
-  content:"";
-  position:absolute;
-  width:280px;height:180px;
-  border:16px solid rgba(255,255,255,.075);
-  border-radius:50%;
-}
-.marquee-inner::before{left:-110px;top:-105px}
-.marquee-inner::after{right:-105px;bottom:-115px}
-.brand{position:relative;z-index:1}
-.brand .kicker{
-  font-size:10px;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--cream)
-}
-.brand h1{
-  margin:1px 0 0;
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(48px,5.2vw,90px);
-  line-height:.84;
-  letter-spacing:-.025em;
-  text-transform:uppercase;
-  font-style:italic;
-  text-shadow:0 4px 0 #32105c,0 7px 0 #ab1e51,0 11px 18px rgba(0,0,0,.46);
-}
-.brand p{
-  margin:8px 0 0;
-  font-size:clamp(10px,1vw,16px);
-  font-weight:900;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:#fff0ad
-}
-
-/* ---------- Host selection strip ---------- */
-.host-strip{
-  flex:0 0 auto;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr)) auto;
-  gap:8px;
-}
-.host-btn,.action-btn,.score-btn,.modal-btn{
-  min-height:44px;
-  border:2px solid #d5a839;
-  border-radius:9px;
-  color:#fff6c8;
-  background:linear-gradient(180deg,#263f95,#12286b);
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.055em;
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.14),0 3px 0 #06113c;
-}
-.host-btn{
-  padding:7px 11px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  flex-wrap:wrap;
-  text-align:center;
-  font-size:11px;
-}
-.host-btn span{color:#fff0a7}
-.host-btn.primary,.action-btn.primary,.modal-btn.primary{
-  color:#2e1800;
-  border-color:#fff0a0;
-  background:linear-gradient(180deg,#ffe990,#e5a423);
-  box-shadow:inset 0 2px 0 #fff9d1,0 3px 0 #7d4e00;
-}
-@media(hover:hover){
-  .host-btn:hover,.action-btn:hover,.score-btn:hover,.modal-btn:hover{filter:brightness(1.12)}
-}
-.full-btn{min-width:88px}
-
-/* ---------- Main game floor ---------- */
-.game-floor{
-  flex:1 1 auto;
-  min-height:0;
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(300px,390px);
-  gap:12px;
-}
-.panel{
-  min-width:0;
-  overflow:hidden;
-  border:4px solid #c79123;
-  border-radius:var(--radius);
-  background:linear-gradient(180deg,#122b78,#091a50);
-  box-shadow:var(--shadow);
-}
-.stage{
-  position:relative;
-  min-height:0;
-  display:flex;
-  flex-direction:column;
-  background:
-    radial-gradient(circle at 50% 11%,rgba(73,145,255,.46),transparent 40%),
-    linear-gradient(180deg,#173e9f 0%,#0d286f 55%,#071743 100%);
-}
-.stage::before,.stage::after{
-  content:"";
-  position:absolute;top:0;bottom:0;width:18%;
-  opacity:.34;pointer-events:none
-}
-.stage::before{
-  left:0;
-  background:linear-gradient(135deg,rgba(239,55,164,.68),transparent 72%);
-  clip-path:polygon(0 0,100% 27%,43% 100%,0 100%)
-}
-.stage::after{
-  right:0;
-  background:linear-gradient(225deg,rgba(84,224,255,.55),transparent 72%);
-  clip-path:polygon(100% 0,0 27%,57% 100%,100% 100%)
-}
-.stage-main{
-  position:relative;
-  z-index:1;
-  flex:1;
-  min-height:420px;
-  padding:52px 28px 20px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.round-meta{
-  position:absolute;
-  left:16px;right:16px;top:13px;
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  color:#dfe7ff;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.1em;
-  text-transform:uppercase
-}
-.round-meta span{
-  padding:5px 9px;
-  border:1px solid rgba(255,255,255,.28);
-  border-radius:999px;
-  background:rgba(5,15,58,.62)
-}
-.prompt{
-  margin-bottom:14px;
-  padding:6px 17px;
-  border:3px solid var(--gold);
-  border-radius:999px;
-  background:#741d70;
-  color:#fff1ae;
-  font-size:clamp(10px,.9vw,14px);
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.17em;
-  box-shadow:0 4px 0 #340c33
-}
-.clue{
-  width:min(1050px,96%);
-  padding:20px 25px;
-  border:5px solid #f4d267;
-  border-radius:15px;
-  background:linear-gradient(180deg,#fbfdff,#dae6ff);
-  color:#0a205f;
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(38px,5vw,84px);
-  line-height:.96;
-  letter-spacing:.018em;
-  text-transform:uppercase;
-  text-shadow:0 2px 0 white;
-  box-shadow:inset 0 -8px 0 rgba(40,70,150,.12),0 8px 0 #755005,0 15px 28px rgba(0,0,0,.3)
-}
-.clue.hidden{letter-spacing:.13em;color:#17265e}
-.artist{
-  margin-top:14px;
-  font-size:clamp(16px,1.7vw,28px);
-  font-weight:900;
-  text-transform:uppercase;
-  letter-spacing:.055em;
-  color:#fff0a4;
-  text-shadow:0 3px 0 #37104b
-}
-.play-block{
-  width:min(920px,96%);
-  margin-top:22px;
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr) 112px;
-  gap:12px;
-  align-items:center
-}
-.play-btn{
-  min-width:235px;
-  min-height:74px;
-  padding:10px 22px;
-  border:5px solid #fff0a0;
-  border-radius:999px;
-  color:#311600;
-  background:radial-gradient(circle at 50% 25%,#fff8bc,#ffd04f 57%,#d79512);
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(23px,2.1vw,34px);
-  letter-spacing:.07em;
-  text-transform:uppercase;
-  box-shadow:inset 0 5px 4px rgba(255,255,255,.58),0 7px 0 #794b00,0 13px 22px rgba(0,0,0,.34)
-}
-.play-btn.playing{
-  color:white;
-  border-color:#ffd3d3;
-  background:radial-gradient(circle at 50% 25%,#ff7b70,#cd1e31 62%,#770916);
-  box-shadow:inset 0 5px 4px rgba(255,255,255,.28),0 7px 0 #610610,0 13px 22px rgba(0,0,0,.34)
-}
-.play-btn:active:not(:disabled){transform:translateY(4px)}
-.progress-wrap{min-width:0}
-.progress{
-  height:21px;
-  overflow:hidden;
-  border:3px solid #c99b35;
-  border-radius:999px;
-  background:#071038;
-  box-shadow:inset 0 3px 8px rgba(0,0,0,.5)
-}
-.progress>div{
-  height:100%;width:0;
-  background:repeating-linear-gradient(90deg,#fff1a2 0 16px,#e6ad28 16px 24px);
-  transition:width .1s linear
-}
-.progress-meta{
-  margin-top:5px;
-  display:flex;
-  justify-content:space-between;
-  gap:8px;
-  color:#e3e8fb;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase
-}
-.timer{color:#fff0a2;font:900 15px "Courier New",monospace}
-.audio-state{
-  min-width:0;
-  padding:9px 8px;
-  border:2px solid rgba(255,255,255,.32);
-  border-radius:9px;
-  background:rgba(5,15,57,.68);
-  color:#dce5ff;
-  text-align:center;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase
-}
-.audio-state.ready{border-color:#69d982;color:#a7ffb6}
-.audio-state.playing{border-color:#fff0a2;color:#fff0a2}
-.audio-state.error{border-color:#ff8d8d;color:#ffd0d0}
-.answer{
-  display:none;
-  width:min(960px,97%);
-  margin-top:19px;
-  padding-top:18px;
-  border-top:3px solid rgba(255,225,111,.55)
-}
-.answer.show{display:block;animation:reveal .2s ease-out}
-.answer-film{
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:clamp(35px,4.7vw,74px);
-  line-height:.94;
-  text-transform:uppercase;
-  color:#fff2a7;
-  text-shadow:0 4px 0 #781961,0 7px 0 #290d50
-}
-.answer-song{
-  margin-top:8px;
-  font-size:clamp(15px,1.4vw,23px);
-  font-weight:900;
-  text-transform:uppercase
-}
-.answer-year{color:var(--cyan)}
-@keyframes reveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
-
-.stage-controls{
-  position:relative;z-index:2;
-  flex:0 0 auto;
-  padding:10px 12px 12px;
-  display:grid;
-  grid-template-columns:1.3fr 1fr 1fr;
-  gap:8px;
-  border-top:3px solid #c99325;
-  background:linear-gradient(180deg,#361657,#190f3c)
-}
-.action-btn{padding:8px 12px;font-size:clamp(11px,.9vw,15px)}
-
-/* ---------- Dynamic contestants ---------- */
-.score-panel{
-  display:flex;
-  flex-direction:column;
-  min-height:0
-}
-.score-title{
-  flex:0 0 auto;
-  padding:10px 13px;
-  border-bottom:2px solid rgba(255,229,135,.45);
-  background:linear-gradient(180deg,#6e1b70,#371353);
-  color:#fff1b5;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  text-align:center
-}
-.contestants{
-  flex:1;
-  min-height:0;
-  padding:10px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  grid-auto-rows:minmax(0,1fr);
-  gap:9px;
-  align-content:stretch
-}
-.contestant{
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:10px;
-  border:3px solid #c7932c;
-  border-radius:13px;
-  text-align:center;
-  background:linear-gradient(180deg,#18388e,#0a1d59);
-  box-shadow:inset 0 0 18px rgba(0,0,0,.24)
-}
-.contestant:nth-child(even){background:linear-gradient(180deg,#762069,#441052)}
-.contestant-name{
-  min-height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  color:#fff4bd;
-  font-size:clamp(12px,1vw,17px);
-  font-weight:900;
-  letter-spacing:.07em;
-  text-transform:uppercase;
-  word-break:break-word
-}
-.score{
-  margin:8px 0 9px;
-  padding:8px 3px;
-  border:4px inset #c1a363;
-  border-radius:7px;
-  background:#05070d;
-  color:#ffef67;
-  font:900 clamp(40px,4vw,68px) "Courier New",monospace;
-  line-height:.88;
-  text-shadow:0 0 8px #a56a00
-}
-.score-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.score-btn{
-  min-height:39px;
-  padding:5px;
-  font-size:13px
-}
-.score-btn.plus{border-color:#91e3a0;background:linear-gradient(180deg,#16843b,#0b5525)}
-.score-btn.minus{border-color:#ff9797;background:linear-gradient(180deg,#b92b38,#771724)}
-
-/* ---------- Minimal footer ---------- */
-.footer{
-  flex:0 0 auto;
-  min-height:28px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px 18px;
-  flex-wrap:wrap;
-  padding:5px 10px;
-  color:#bfc9e7;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.1em;
-  text-transform:uppercase
-}
-.footer b{color:#ffe496}
-
-/* ---------- Modal system ---------- */
-.modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:50;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(3,6,24,.76);
-  backdrop-filter:blur(8px)
-}
-.modal-backdrop.open{display:flex}
-.modal{
-  width:min(920px,96vw);
-  max-height:88vh;
-  overflow:auto;
-  border:4px solid #d5a43a;
-  border-radius:18px;
-  background:linear-gradient(180deg,#152d7a,#0b194c);
-  box-shadow:0 22px 70px rgba(0,0,0,.58)
-}
-.modal.wide{width:min(1120px,97vw)}
-.modal-head{
-  position:sticky;top:0;z-index:2;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 15px;
-  border-bottom:2px solid rgba(255,227,129,.42);
-  background:linear-gradient(180deg,#711c70,#3a1357)
-}
-.modal-head h2{
-  margin:0;
-  color:#fff1b1;
-  font-size:16px;
-  letter-spacing:.14em;
-  text-transform:uppercase
-}
-.close-btn{
-  width:42px;height:42px;
-  border:2px solid #d4a63a;
-  border-radius:50%;
-  color:#fff1ad;
-  background:#111f60;
-  font-size:20px;
-  font-weight:900
-}
-.modal-body{padding:17px}
-.modal-actions{
-  position:sticky;bottom:0;
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  padding:11px 15px;
-  border-top:2px solid rgba(255,227,129,.35);
-  background:#0a1746
-}
-.modal-btn{min-height:42px;padding:7px 13px}
-
-/* setup/settings */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.field{display:grid;gap:6px}
-.field label{
-  color:#fff0af;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:.1em;
-  text-transform:uppercase
-}
-.field input,.field select{
-  min-height:44px;
-  width:100%;
-  border:2px solid #ac8735;
-  border-radius:8px;
-  background:#07143f;
-  color:white;
-  padding:8px 10px;
-  font-weight:800
-}
-.names-grid{
-  margin-top:15px;
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px
-}
-.section-label{
-  grid-column:1/-1;
-  margin-top:3px;
-  padding-bottom:7px;
-  border-bottom:1px solid rgba(255,255,255,.17);
-  color:#fff0af;
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.11em;
-  text-transform:uppercase
-}
-
-/* mode and era tiles */
-.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
-.choice{
-  min-height:150px;
-  padding:14px;
-  border:3px solid #9d7a30;
-  border-radius:13px;
-  background:linear-gradient(180deg,#203b8c,#111f5d);
-  color:white;
-  text-align:left
-}
-.choice.selected{
-  border-color:#fff0a0;
-  background:linear-gradient(180deg,#8d247d,#43145d);
-  box-shadow:0 0 0 3px rgba(255,218,91,.22)
-}
-.choice strong{
-  display:block;
-  margin-bottom:7px;
-  color:#fff0ad;
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:25px;
-  letter-spacing:.035em;
-  text-transform:uppercase
-}
-.choice span{display:block;color:#d5ddf4;font-size:12px;line-height:1.45}
-.era-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.era-choice{
-  min-height:92px;
-  border:3px solid #9d7a30;
-  border-radius:12px;
-  background:linear-gradient(180deg,#203b8c,#111f5d);
-  color:#fff1b2;
-  font-family:Impact,"Arial Black",Arial,sans-serif;
-  font-size:22px;
-  letter-spacing:.04em;
-  text-transform:uppercase
-}
-.era-choice.selected{
-  border-color:#fff0a0;
-  background:linear-gradient(180deg,#92267d,#49155e)
-}
-
-/* song selector */
-.song-tools{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:8px}
-.song-tools input,.song-tools select{
-  min-height:43px;
-  border:2px solid #ab8735;
-  border-radius:8px;
-  background:#07143f;
-  color:white;
-  padding:8px 10px;
-  font-weight:800
-}
-.song-list{margin-top:12px;border-top:1px solid rgba(255,255,255,.16)}
-.song-row{
-  display:grid;
-  grid-template-columns:62px minmax(0,1.15fr) minmax(0,1fr) 92px;
-  gap:9px;
-  align-items:center;
-  padding:9px 6px;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  cursor:pointer
-}
-.song-row.selected{background:rgba(255,219,89,.13);box-shadow:inset 4px 0 0 #ffe16b}
-.song-era{color:#ffe078;font-size:11px;font-weight:900}
-.song-main,.song-film{min-width:0}
-.song-main strong,.song-film strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.song-main span,.song-film span{display:block;color:#cbd4ef;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.song-play{
-  min-height:35px;
-  border:2px solid #ffe294;
-  border-radius:7px;
-  color:#2e1800;
-  background:linear-gradient(180deg,#ffe991,#dfa01f);
-  font-size:10px;
-  font-weight:900;
-  text-transform:uppercase
-}
-@media(hover:hover){.song-row:hover{background:rgba(255,255,255,.05)}}
-
-/* ---------- Responsive ---------- */
-@media(min-width:1500px){
-  .app{padding-top:14px}
-  .stage-main{min-height:510px}
-  .game-floor{grid-template-columns:minmax(0,1fr) 420px}
-}
-@media(max-width:1100px){
-  .app{min-height:auto}
-  .game-floor{grid-template-columns:1fr}
-  .contestants{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));grid-auto-rows:auto}
-  .contestant{min-height:165px}
-}
-@media(max-width:760px){
-  .app{width:98vw;padding-top:6px}
-  .marquee{padding:8px;border-radius:18px}
-  .marquee-inner{min-height:84px;padding:13px 10px;border-width:3px}
-  .brand h1{font-size:52px}
-  .brand p{font-size:10px}
-  .host-strip{grid-template-columns:1fr 1fr}
-  .full-btn{grid-column:1/-1}
-  .stage-main{padding:50px 8px 18px;min-height:470px}
-  .round-meta{left:8px;right:8px;top:9px;font-size:8px}
-  .clue{width:100%;padding:17px 8px;border-width:4px;font-size:clamp(32px,11vw,54px)}
-  .artist{font-size:17px}
-  .play-block{width:100%;grid-template-columns:1fr;gap:9px}
-  .play-btn{width:100%;min-width:0;min-height:68px;font-size:28px}
-  .audio-state{font-size:10px}
-  .stage-controls{grid-template-columns:1fr}
-  .contestants{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .form-grid,.names-grid{grid-template-columns:1fr}
-  .choice-grid{grid-template-columns:1fr}
-  .era-grid{grid-template-columns:1fr 1fr}
-  .song-tools{grid-template-columns:1fr}
-  .song-row{grid-template-columns:48px minmax(0,1fr) 88px}
-  .song-film{display:none}
-}
-@media(max-width:430px){
-  .brand h1{font-size:44px}
-  .host-strip{grid-template-columns:1fr}
-  .full-btn{grid-column:auto}
-  .contestants{grid-template-columns:1fr}
-  .era-grid{grid-template-columns:1fr}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{animation:none!important;transition:none!important}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apogee Games | Original Games for Strange New Worlds</title>
+  <meta name="description" content="Apogee Games is the central home for Awake in the Black, Cultists &amp; Classrooms, Star Wars: Flow of the Force, legacy designs, and bonus projects.">
+  <meta name="theme-color" content="#070c14">
+  <meta property="og:title" content="Apogee Games | Original Games for Strange New Worlds">
+  <meta property="og:description" content="A central launch point for current Apogee Games titles, legacy designs, and bonus projects.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://apogeegames.slighltd.org/">
+  <meta property="og:image" content="assets/img/social/apogee_social_preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apogee Games | Original Games for Strange New Worlds">
+  <meta name="twitter:description" content="A central launch point for current Apogee Games titles, legacy designs, and bonus projects.">
+  <meta name="twitter:image" content="assets/img/social/apogee_social_preview.png">
+  <link rel="icon" href="assets/img/icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/icons/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body>
-<div class="app">
-  <header class="marquee">
-    <i class="light-strip top"></i><i class="light-strip right"></i><i class="light-strip bottom"></i><i class="light-strip left"></i>
-    <div class="marquee-inner">
-      <div class="brand">
-        <div class="kicker">The Movie Music Challenge</div>
-        <h1>Reel Recall</h1>
-        <p>Hear the hit. Name the flick.</p>
-      </div>
+<body data-zone="apogee">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Apogee Games home">
+        <span class="brand-mark" aria-hidden="true"><img src="assets/img/logos/apogee_games_logo_white.webp" alt="" loading="eager"></span>
+        <span class="brand-title"><span>Apogee Games</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation"><span></span><span></span><span></span></button>
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#games">Games</a>
+        <a href="#design-archive">Legacy</a>
+        <a href="#bonus">Bonus</a>
+        <a href="#about">Publisher</a>
+        <details class="nav-more">
+          <summary>More</summary>
+          <div class="nav-more-panel">
+            <a href="#store">Store</a>
+            <a href="#contact">Contact</a>
+            <a href="#legal">Legal</a>
+            <a href="#updates">Changelog</a>
+          </div>
+        </details>
+      </nav>
     </div>
   </header>
 
-  <nav class="host-strip" aria-label="Host controls">
-    <button class="host-btn" id="songsBtn">Songs <span id="songSelectionLabel">Random</span></button>
-    <button class="host-btn" id="settingsBtn">Settings <span id="contestantSummary">2 Teams</span></button>
-    <button class="host-btn" id="modeBtn">Mode <span id="modeSummary">Name Movie</span></button>
-    <button class="host-btn" id="eraBtn">Era <span id="eraSummary">All Eras</span></button>
-    <button class="host-btn primary full-btn" id="fullBtn">Fullscreen</button>
-  </nav>
+  <div class="mission-trajectory" aria-hidden="true"><div class="trajectory-track"><div class="trajectory-fill"></div><div class="trajectory-marker"></div></div></div>
+  <div class="section-indicator" id="sectionIndicator" aria-hidden="true"><span class="indicator-kicker">Apogee Network</span><strong>APOGEE MISSION</strong></div>
 
-  <main class="game-floor">
-    <section class="panel stage">
-      <div class="stage-main">
-        <div class="round-meta">
-          <span id="roundEra">Ready</span>
-          <span id="roundStatus">Choose Next Round</span>
+  <main id="main-content">
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Independent Tabletop Design</span>
+          <h1>Original games for strange new worlds.</h1>
+          <p class="lead">Apogee Games is the launch point for focused tabletop roleplaying games, playable digital tools, and design projects built to move quickly from curiosity to the table.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#games">Choose a Game</a>
+            <a class="btn" href="#design-archive">Open the Design Archive</a>
+          </div>
         </div>
-
-        <div class="prompt" id="prompt">Press Next Round to begin</div>
-        <div class="clue" id="clue">Reel Recall</div>
-        <div class="artist" id="artist">Movie music challenge</div>
-
-        <div class="play-block">
-          <button class="play-btn" id="playBtn" disabled>Play Song</button>
-          <div class="progress-wrap">
-            <div class="progress"><div id="progressFill"></div></div>
-            <div class="progress-meta">
-              <span id="clipLabel">15 second clip</span>
-              <span class="timer" id="timer">0.0s</span>
+        <aside class="hero-side" aria-label="Apogee Games identity and site status">
+          <div class="hero-logo-panel"><img class="logo-img apogee-logo" src="assets/img/logos/apogee_games_logo_white.webp" alt="Apogee Games logo" loading="eager"></div>
+          <div class="status-panel launch-console">
+            <div class="status-kicker">Publishing Console</div>
+            <div class="readout">
+              <div class="readout-row"><span>Current Titles</span><span>3 Game Lines</span></div>
+              <div class="readout-row"><span>Dedicated Hubs</span><span>All 3 Live</span></div>
+              <div class="readout-row"><span>Site Build</span><span>v1.11.0</span></div>
             </div>
           </div>
-          <div class="audio-state" id="audioState">No Track</div>
-        </div>
-
-        <div class="answer" id="answer">
-          <div class="answer-film" id="answerFilm"></div>
-          <div class="answer-song" id="answerSong"></div>
-        </div>
-      </div>
-
-      <div class="stage-controls">
-        <button class="action-btn primary" id="nextBtn">Next Random Round</button>
-        <button class="action-btn" id="revealBtn" disabled>Reveal Answer</button>
-        <button class="action-btn" id="replayBtn" disabled>Replay Clip</button>
+        </aside>
       </div>
     </section>
 
-    <aside class="panel score-panel">
-      <div class="score-title">Scoreboard</div>
-      <div class="contestants" id="contestants"></div>
-    </aside>
+    <section id="games" class="collapsible-section main-collapsible-section">
+      <div class="container">
+        <details class="collapse-shell main-collapse games-collapse" data-collapse-section open>
+          <summary class="collapse-summary">
+            <span class="collapse-mark" aria-hidden="true"></span>
+            <span class="collapse-title-group"><span class="eyebrow">Current Game Lines</span><span class="collapse-heading">Choose Your Table</span><span class="collapse-preview">Each current title has, or is receiving, a dedicated home for its rulebooks, character tools, and play support.</span></span>
+            <span class="collapse-state" aria-hidden="true">Expand</span>
+          </summary>
+          <div class="collapse-content">
+            <div class="grid three game-landing-grid">
+              <article class="card game-card awake awake-card">
+                <div class="card-media awake-media"><img class="logo-img awake-logo" src="assets/img/logos/awake_in_the_black_logo.webp" alt="Awake in the Black logo" loading="eager"></div>
+                <div class="badges"><span class="badge awake-tag">Crew Survival</span><span class="badge current">Dedicated Hub</span></div>
+                <h3>Awake in the Black</h3>
+                <p>A consequence-driven science-fiction TTRPG about a crew, its ship, dangerous work, and the pressure that follows everyone home.</p>
+                <div class="meta-list"><div><span>Core</span><strong>v3.2.1</strong></div><div><span>Support</span><strong>Rules, sheets, AI GM</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="https://awake.slighltd.org/" target="_blank" rel="noopener noreferrer">Visit Site</a></div>
+              </article>
+
+              <article class="card game-card cc cc-card">
+                <div class="card-media cc-media"><img class="logo-img cc-logo" src="assets/img/logos/cultists_classrooms_logo.webp" alt="Cultists &amp; Classrooms logo" loading="lazy"></div>
+                <div class="badges"><span class="badge cc-tag">School Horror-Comedy</span><span class="badge current">Dedicated Hub</span></div>
+                <h3>Cultists &amp; Classrooms</h3>
+                <p>Educators and campus staff face literal monsters with practical judgment, improvised tools, and the stubborn refusal to lose another Monday.</p>
+                <div class="meta-list"><div><span>Core</span><strong>v3.1.0 Draft</strong></div><div><span>Support</span><strong>Rules, tools, one-shots</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="https://cult.slighltd.org/" target="_blank" rel="noopener noreferrer">Visit Site</a></div>
+              </article>
+
+              <article class="card game-card flow flow-card">
+                <div class="card-media flow-media"><img class="logo-img flow-logo" src="assets/img/art/flow/flow_official_logo_grey_jedi_inverted.webp" alt="Star Wars: Flow of the Force Grey Jedi emblem and title" loading="lazy"></div>
+                <div class="badges"><span class="badge flow-tag">Private Fan Project</span><span class="badge current">Dedicated Hub</span></div>
+                <h3>Star Wars: Flow of the Force</h3>
+                <p>A narrative D6 game of recovered instruction, dangerous power, and a Force-attuned character whose philosophy emerges through repeated choices.</p>
+                <div class="meta-list"><div><span>Core</span><strong>v2.0.0</strong></div><div><span>Support</span><strong>Rules, console, AI GM</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="https://flow.slighltd.org/" target="_blank" rel="noopener noreferrer">Visit Site</a></div>
+              </article>
+            </div>
+            <div class="card network-note">
+              <span class="eyebrow">A Cleaner Apogee Network</span>
+              <h2>One publisher, focused game hubs.</h2>
+              <p>The main Apogee site now introduces the catalog and routes players to each game’s dedicated page. Rulebooks and active play tools live with the game they support, while legacy and bonus projects remain collected here.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="design-archive" class="collapsible-section main-collapsible-section">
+      <div class="container">
+        <details class="collapse-shell main-collapse" data-collapse-section>
+          <summary class="collapse-summary">
+            <span class="collapse-mark" aria-hidden="true"></span>
+            <span class="collapse-title-group"><span class="eyebrow">Legacy Designs</span><span class="collapse-heading">The Design Archive</span><span class="collapse-preview">Earlier systems, character sheets, and experiments preserved as part of the road to the current Apogee Games catalog.</span></span>
+            <span class="collapse-state" aria-hidden="true">Expand</span>
+          </summary>
+          <div class="collapse-content">
+            <div class="grid three archive-grid">
+              <article class="card archive-card"><div class="badges"><span class="badge">Legacy</span><span class="badge current">Playable Tool</span></div><h3>Shadows Over Sol 2e</h3><p>A digital character sheet paired with the source rulebook for a legacy science-fiction horror system.</p><div class="card-actions"><a class="btn primary" href="tools/design-archive/shadows-over-sol-2e/index.html" target="_blank" rel="noopener noreferrer">Open Digital Sheet ↗</a><a class="btn" href="files/design-archive/shadows_over_sol_2e_core_rulebook.pdf" target="_blank" rel="noopener noreferrer">Open Rulebook ↗</a></div></article>
+              <article class="card archive-card"><div class="badges"><span class="badge">Legacy</span><span class="badge current">Playable Tool</span></div><h3>Cultists &amp; Cubicles</h3><p>The workplace-horror character sheet that helped establish the design lineage later refined into Cultists &amp; Classrooms.</p><div class="card-actions"><a class="btn primary" href="tools/design-archive/cultists-and-cubicles/index.html" target="_blank" rel="noopener noreferrer">Open Digital Sheet ↗</a></div></article>
+              <article class="card archive-card"><div class="badges"><span class="badge">Legacy</span><span class="badge current">Playable Tool</span></div><h3>Ion Heart</h3><p>A single-player starfighter project preserved with its digital pilot sheet and Pilots Handbook.</p><div class="card-actions"><a class="btn primary" href="tools/design-archive/ion-heart/index.html" target="_blank" rel="noopener noreferrer">Open Digital Sheet ↗</a><a class="btn" href="files/design-archive/ion_heart_pilots_handbook.pdf" target="_blank" rel="noopener noreferrer">Open Handbook ↗</a></div></article>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="bonus" class="collapsible-section main-collapsible-section">
+      <div class="container">
+        <details class="collapse-shell main-collapse bonus-collapse" data-collapse-section>
+          <summary class="collapse-summary">
+            <span class="collapse-mark" aria-hidden="true"></span>
+            <span class="collapse-title-group"><span class="eyebrow">Bonus Projects</span><span class="collapse-heading">The Bonus Shelf</span><span class="collapse-preview">Standalone games and side projects from Apogee Games, including Golf, Boggle, and the Reel Recall movie-music game.</span></span>
+            <span class="collapse-state" aria-hidden="true">Expand</span>
+          </summary>
+          <div class="collapse-content">
+            <div class="grid three bonus-grid">
+              <article class="card bonus-card">
+                <div class="badges"><span class="badge">Tabletop Game</span><span class="badge current">Playable</span></div>
+                <h2>Golf: It’s a Good Game</h2>
+                <p class="lead">The digital version of the original game, co-developed by Brandon Sligh and Ethan Silva.</p>
+                <div class="meta-list"><div><span>Version</span><strong>v4.1.0</strong></div><div><span>Format</span><strong>HTML + ZIP</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="bonus/golf-its-a-good-game/index.html" target="_blank" rel="noopener noreferrer">Open Golf v4.1.0 ↗</a><a class="btn" href="files/golf-its-a-good-game/Golf-Its-A-Good-Game_v4.1.0.zip" download>Download Project ZIP</a></div>
+              </article>
+
+              <article class="card bonus-card">
+                <div class="badges"><span class="badge">Word Game</span><span class="badge current">Playable</span></div>
+                <h2>Boggle</h2>
+                <p class="lead">A large-screen, local-play Boggle implementation built for classroom, family, and TV display use.</p>
+                <div class="meta-list"><div><span>Version</span><strong>v1.1.0</strong></div><div><span>Format</span><strong>Single HTML Page</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="bonus/boggle/index.html" target="_blank" rel="noopener noreferrer">Open Boggle v1.1.0 ↗</a></div>
+              </article>
+
+              <article class="card bonus-card">
+                <div class="badges"><span class="badge">Movie Music Game</span><span class="badge current">Live Site</span></div>
+                <h2>Reel Recall</h2>
+                <p class="lead">A host-driven movie-music game for identifying songs, artists, and films across themed eras and categories.</p>
+                <div class="meta-list"><div><span>Format</span><strong>Hosted Web Game</strong></div><div><span>Status</span><strong>Live</strong></div></div>
+                <div class="card-actions"><a class="btn primary" href="https://reel-recall.slighltd.org/" target="_blank" rel="noopener noreferrer">Open Reel Recall ↗</a></div>
+              </article>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="store" class="collapsible-section">
+      <div class="container">
+        <details class="collapse-shell store-collapse" data-collapse-section>
+          <summary class="collapse-summary"><span class="collapse-mark" aria-hidden="true"></span><span class="collapse-title-group"><span class="eyebrow">Store</span><span class="collapse-heading">Digital Editions Coming Later</span><span class="collapse-preview">Public resources remain available through each game hub while commercial editions and storefront distribution are prepared.</span></span><span class="collapse-state" aria-hidden="true">Expand</span></summary>
+          <div class="collapse-content"><div class="card"><h3>Current Access</h3><p>Use the game cards above to reach current files and tools. Commercial editions are not yet listed for sale.</p><div class="button-row"><a class="btn primary" href="#games">Browse Game Hubs</a><button class="btn disabled" type="button" disabled>DriveThruRPG Coming Soon</button></div></div></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="about" class="collapsible-section main-collapsible-section">
+      <div class="container">
+        <details class="collapse-shell main-collapse about-collapse" data-collapse-section>
+          <summary class="collapse-summary"><span class="collapse-mark" aria-hidden="true"></span><span class="collapse-title-group"><span class="eyebrow">Publisher</span><span class="collapse-heading">Apogee Games</span><span class="collapse-preview">Independent tabletop design by Brandon Sligh, built around clear premises, practical play, and useful digital support.</span></span><span class="collapse-state" aria-hidden="true">Expand</span></summary>
+          <div class="collapse-content"><div class="grid two"><div class="about-logo-panel"><img class="logo-img apogee-logo" src="assets/img/logos/apogee_games_logo_white.webp" alt="Apogee Games logo" loading="lazy"></div><div class="card"><span class="eyebrow">Our Mission</span><h2>Boldly create original games for strange new worlds.</h2><p class="lead">Apogee Games develops focused systems with enough structure to support play and enough room for a table to make them its own.</p><p>Each current title receives a dedicated resource hub so players can find the right rules, sheets, and support without sorting through the full publisher archive.</p></div></div></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact" class="collapsible-section main-collapsible-section">
+      <div class="container">
+        <details class="collapse-shell main-collapse contact-collapse" data-collapse-section>
+          <summary class="collapse-summary"><span class="collapse-mark" aria-hidden="true"></span><span class="collapse-title-group"><span class="eyebrow">Contact</span><span class="collapse-heading">Reach Apogee Games</span><span class="collapse-preview">Questions, feedback, and play reports can be directed to the publisher through the primary Apogee contact channel.</span></span><span class="collapse-state" aria-hidden="true">Expand</span></summary>
+          <div class="collapse-content"><div class="card"><h3>Contact Channel</h3><p>For project questions, corrections, or table feedback, use the contact information included with the current game materials or the established Apogee Games publishing account.</p></div></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="legal" class="collapsible-section">
+      <div class="container">
+        <details class="collapse-shell legal-collapse" data-collapse-section>
+          <summary class="collapse-summary"><span class="collapse-mark" aria-hidden="true"></span><span class="collapse-title-group"><span class="eyebrow">Legal</span><span class="collapse-heading">Copyright and Project Status</span><span class="collapse-preview">Original titles remain Apogee Games properties; third-party and fan-project notices remain attached to their specific materials.</span></span><span class="collapse-state" aria-hidden="true">Expand</span></summary>
+          <div class="collapse-content"><div class="card"><h3>Original Apogee Games Titles</h3><p>Awake in the Black and Cultists &amp; Classrooms are original Apogee Games tabletop roleplaying games created by Brandon Sligh. Copyright, attribution, and license notes remain with each current rulebook and release package.</p><h3>Star Wars: Flow of the Force</h3><p>Flow of the Force is an unofficial, noncommercial fan-created TTRPG for private play. It is not affiliated with or endorsed by Lucasfilm Ltd., The Walt Disney Company, or any official Star Wars licensee. Star Wars names, settings, characters, concepts, and trademarks remain the property of their respective owners.</p></div></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="updates" class="collapsible-section">
+      <div class="container">
+        <details class="collapse-shell updates-collapse" data-collapse-section>
+          <summary class="collapse-summary"><span class="collapse-mark" aria-hidden="true"></span><span class="collapse-title-group"><span class="eyebrow">Changelog</span><span class="collapse-heading">Latest Site Updates</span><span class="collapse-preview">The Bonus Shelf now collects Golf, Boggle, and Reel Recall alongside the current Apogee Games catalog and design archive.</span></span><span class="collapse-state" aria-hidden="true">Expand</span></summary>
+          <div class="collapse-content"><div class="update-list">
+            <div class="update-item"><time>v1.11.0</time><div><h3>Reel Recall Bonus Shelf Integration</h3><p>Added Reel Recall to The Bonus Shelf as a live hosted movie-music game and retained Golf and Boggle as peer bonus projects.</p></div></div>
+            <div class="update-item"><time>v1.10.0</time><div><h3>Bonus Shelf Expansion</h3><p>Added Boggle v1.1.0 as a bundled local browser game and refactored the Bonus section into The Bonus Shelf so multiple standalone Apogee projects can be presented consistently.</p></div></div>
+            <div class="update-item"><time>v1.9.3</time><div><h3>Publishing Console Consolidation</h3><p>Removed the redundant Flow Hub and Legacy Shelf status lines from the Publishing Console and tightened the remaining status readout.</p></div></div>
+            <div class="update-item"><time>v1.9.2</time><div><h3>Golf Attribution and Copy Update</h3><p>Revised the Golf project description to credit Ethan Silva and Brandon Sligh as co-developers and clarified the Bonus Shelf entry as the digital version of the original game.</p></div></div>
+            <div class="update-item"><time>v1.9.1</time><div><h3>Game Hub Link Refinement</h3><p>Updated the Cultists &amp; Classrooms destination to cult.slighltd.org and standardized all current-game card actions to the label “Visit Site.”</p></div></div>
+            <div class="update-item"><time>v1.9.0</time><div><h3>Flow of the Force Hub Launch</h3><p>Connected Star Wars: Flow of the Force to its dedicated private-use resource site at flow.slighltd.org, completing the three-hub architecture for the current Apogee Games catalog.</p></div></div>
+            <div class="update-item"><time>v1.8.0</time><div><h3>Dedicated Game Hub Architecture</h3><p>Refocused the main Apogee site as the catalog landing page; moved Awake in the Black and Cultists &amp; Classrooms resource access to dedicated sites; removed duplicated local current-game files; retained the design archive and Golf bonus project; and marked the Flow of the Force hub as the next migration.</p></div></div>
+          </div><div class="button-row changelog-actions"><a class="btn primary" href="README.md" download>Download README</a></div></div>
+        </details>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
-    <span>Reel Recall <b>v0.4.1</b></span>
-    <span><b id="footerTracks">54</b> Tracks</span>
-    <span>Round <b id="footerRound">0</b></span>
-    <span>Mode <b id="footerMode">Name Movie</b></span>
-    <span>Era <b id="footerEra">All</b></span>
+    <div class="container footer-grid">
+      <div><h4>Apogee Games</h4><p>Original games for strange new worlds.</p></div>
+      <div><h4>Current Games</h4><a href="https://awake.slighltd.org/" target="_blank" rel="noopener noreferrer">Awake in the Black ↗</a><a href="https://cult.slighltd.org/" target="_blank" rel="noopener noreferrer">Cultists &amp; Classrooms ↗</a><a href="https://flow.slighltd.org/" target="_blank" rel="noopener noreferrer">Flow of the Force ↗</a></div>
+      <div><h4>Archive</h4><a href="#design-archive">Legacy Designs</a><a href="#bonus">Bonus Shelf</a><a href="#store">Store</a></div>
+      <div><h4>Publisher</h4><a href="#about">About</a><a href="#contact">Contact</a><a href="#legal">Legal</a><a href="#updates">Changelog</a></div>
+    </div>
+    <div class="container fine-print">Copyright 2026 Brandon Sligh &amp; Apogee Games. Main site build v1.11.0.</div>
   </footer>
-</div>
 
-<!-- Settings -->
-<div class="modal-backdrop" id="settingsModal">
-  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
-    <div class="modal-head">
-      <h2 id="settingsTitle">Game Settings</h2>
-      <button class="close-btn" data-close="settingsModal" aria-label="Close settings">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-grid">
-        <div class="field">
-          <label for="contestantType">Contestant Type</label>
-          <select id="contestantType">
-            <option value="team">Teams</option>
-            <option value="player">Players</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="contestantCount">Number of Contestants</label>
-          <select id="contestantCount">
-            <option value="1">1</option><option value="2" selected>2</option><option value="3">3</option>
-            <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="clipLength">Clip Length</label>
-          <select id="clipLength">
-            <option value="5">5 seconds</option>
-            <option value="10">10 seconds</option>
-            <option value="15" selected>15 seconds</option>
-            <option value="20">20 seconds</option>
-            <option value="30">30 seconds</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="scoreStep">Score Increment</label>
-          <select id="scoreStep">
-            <option value="1" selected>1 point</option>
-            <option value="5">5 points</option>
-            <option value="10">10 points</option>
-          </select>
-        </div>
-        <div class="names-grid" id="nameFields"></div>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn" id="resetScoresBtn">Reset Scores</button>
-      <button class="modal-btn primary" id="saveSettingsBtn">Save Settings</button>
-    </div>
-  </section>
-</div>
-
-<!-- Mode -->
-<div class="modal-backdrop" id="modeModal">
-  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modeTitle">
-    <div class="modal-head">
-      <h2 id="modeTitle">Mode Selection</h2>
-      <button class="close-btn" data-close="modeModal" aria-label="Close mode selection">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="choice-grid" id="modeChoices">
-        <button class="choice selected" data-mode="movie">
-          <strong>Name the Movie</strong>
-          <span>Song title and artist are visible. Contestants identify the film.</span>
-        </button>
-        <button class="choice" data-mode="song">
-          <strong>Name the Song</strong>
-          <span>Movie title is visible. Contestants identify the song.</span>
-        </button>
-        <button class="choice" data-mode="both">
-          <strong>Double Recall</strong>
-          <span>Song and movie are both concealed. Contestants identify both.</span>
-        </button>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn primary" id="saveModeBtn">Use Selected Mode</button>
-    </div>
-  </section>
-</div>
-
-<!-- Era -->
-<div class="modal-backdrop" id="eraModal">
-  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="eraTitle">
-    <div class="modal-head">
-      <h2 id="eraTitle">Era Selection</h2>
-      <button class="close-btn" data-close="eraModal" aria-label="Close era selection">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="era-grid" id="eraChoices">
-        <button class="era-choice selected" data-era="all">All Eras</button>
-        <button class="era-choice" data-era="1980s">1980s</button>
-        <button class="era-choice" data-era="1990s">1990s</button>
-        <button class="era-choice" data-era="2000s+">2000s+</button>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn primary" id="saveEraBtn">Use Selected Era</button>
-    </div>
-  </section>
-</div>
-
-<!-- Songs -->
-<div class="modal-backdrop" id="songsModal">
-  <section class="modal wide" role="dialog" aria-modal="true" aria-labelledby="songsTitle">
-    <div class="modal-head">
-      <h2 id="songsTitle">Song Selection</h2>
-      <button class="close-btn" data-close="songsModal" aria-label="Close song selection">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="song-tools">
-        <input id="songSearch" placeholder="Search song, artist, or film" aria-label="Search songs">
-        <select id="songEraFilter" aria-label="Filter song list">
-          <option value="all">All eras</option>
-          <option value="1980s">1980s</option>
-          <option value="1990s">1990s</option>
-          <option value="2000s+">2000s+</option>
-        </select>
-      </div>
-      <div class="song-list" id="songList"></div>
-    </div>
-  </section>
-</div>
-
-<audio id="audio" preload="metadata"></audio>
-<script src="data/tracks.js"></script>
-<script>
-(()=>{
-"use strict";
-const VERSION="0.4.1";
-const TRACKS=Array.isArray(window.REEL_RECALL_TRACKS)?window.REEL_RECALL_TRACKS:[];
-const $=s=>document.querySelector(s);
-const $$=s=>[...document.querySelectorAll(s)];
-
-const defaults={
-  contestantType:"team",
-  contestantCount:2,
-  names:["Team 1","Team 2","Team 3","Team 4","Team 5","Team 6"],
-  clipLength:15,
-  scoreStep:1,
-  mode:"movie",
-  era:"all"
-};
-let settings=loadSettings();
-let scores=Array(6).fill(0);
-let current=null;
-let round=0;
-let used=new Set();
-let pendingMode=settings.mode;
-let pendingEra=settings.era;
-let timerId=null;
-let clipTimeout=null;
-let clipStartPerf=0;
-let elapsed=0;
-let playback="idle";
-
-function loadSettings(){
-  try{
-    const saved=JSON.parse(localStorage.getItem("reel_recall_settings")||"null");
-    return Object.assign({},defaults,saved||{});
-  }catch(e){return {...defaults}}
-}
-function saveSettings(){
-  try{localStorage.setItem("reel_recall_settings",JSON.stringify(settings))}catch(e){}
-}
-function esc(s){
-  return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-}
-function modeLabel(mode){
-  return mode==="movie"?"Name Movie":mode==="song"?"Name Song":"Double Recall";
-}
-function eraLabel(era){
-  return era==="all"?"All Eras":era;
-}
-function contestantLabel(){
-  const noun=settings.contestantType==="team"?(settings.contestantCount===1?"Team":"Teams"):(settings.contestantCount===1?"Player":"Players");
-  return `${settings.contestantCount} ${noun}`;
-}
-function openModal(id){
-  const el=$("#"+id);if(el){el.classList.add("open");const focus=el.querySelector("button,input,select");focus?.focus()}
-}
-function closeModal(id){$("#"+id)?.classList.remove("open")}
-function closeAll(){$$(".modal-backdrop.open").forEach(m=>m.classList.remove("open"))}
-
-function renderHeaderState(){
-  $("#contestantSummary").textContent=contestantLabel();
-  $("#modeSummary").textContent=modeLabel(settings.mode);
-  $("#eraSummary").textContent=eraLabel(settings.era);
-  $("#footerTracks").textContent=TRACKS.length;
-  $("#footerMode").textContent=modeLabel(settings.mode);
-  $("#footerEra").textContent=settings.era==="all"?"All":settings.era;
-  $("#clipLabel").textContent=`${settings.clipLength} second clip`;
-}
-function renderContestants(){
-  const holder=$("#contestants");
-  holder.innerHTML="";
-  for(let i=0;i<settings.contestantCount;i++){
-    const name=settings.names[i] || `${settings.contestantType==="team"?"Team":"Player"} ${i+1}`;
-    const card=document.createElement("div");
-    card.className="contestant";
-    card.innerHTML=`
-      <div class="contestant-name">${esc(name)}</div>
-      <div class="score" data-score-display="${i}">${scores[i]}</div>
-      <div class="score-controls">
-        <button class="score-btn plus" data-score="${i}" data-dir="1">+${settings.scoreStep}</button>
-        <button class="score-btn minus" data-score="${i}" data-dir="-1">-${settings.scoreStep}</button>
-      </div>`;
-    holder.appendChild(card);
-  }
-}
-function renderNameFields(){
-  const holder=$("#nameFields");
-  holder.innerHTML=`<div class="section-label">Contestant Names</div>`;
-  const count=Number($("#contestantCount").value)||2;
-  const type=$("#contestantType").value;
-  for(let i=0;i<count;i++){
-    const field=document.createElement("div");
-    field.className="field";
-    const value=settings.names[i] || `${type==="team"?"Team":"Player"} ${i+1}`;
-    field.innerHTML=`<label for="name${i}">${type==="team"?"Team":"Player"} ${i+1}</label><input id="name${i}" data-name-index="${i}" value="${esc(value)}">`;
-    holder.appendChild(field);
-  }
-}
-function renderModeChoices(){
-  $$("#modeChoices .choice").forEach(b=>b.classList.toggle("selected",b.dataset.mode===pendingMode));
-}
-function renderEraChoices(){
-  $$("#eraChoices .era-choice").forEach(b=>b.classList.toggle("selected",b.dataset.era===pendingEra));
-}
-function renderSongList(){
-  const q=$("#songSearch").value.trim().toLowerCase();
-  const era=$("#songEraFilter").value;
-  const items=TRACKS.filter(t=>{
-    const hay=`${t.song} ${t.artist} ${t.film}`.toLowerCase();
-    return (!q||hay.includes(q)) && (era==="all"||t.era===era);
-  });
-  $("#songList").innerHTML=items.map(t=>`
-    <div class="song-row ${current?.id===t.id?"selected":""}" data-song-id="${t.id}" tabindex="0" role="button">
-      <div class="song-era">${esc(t.era)}</div>
-      <div class="song-main"><strong>${esc(t.song)}</strong><span>${esc(t.artist)}</span></div>
-      <div class="song-film"><strong>${esc(t.film)}</strong><span>${t.year}</span></div>
-      <button class="song-play" data-song-id="${t.id}">Play Round</button>
-    </div>`).join("");
-}
-
-function eligibleTracks(){
-  return settings.era==="all"?TRACKS:TRACKS.filter(t=>t.era===settings.era);
-}
-function chooseRandom(){
-  const pool=eligibleTracks();
-  if(!pool.length)return;
-  let available=pool.filter(t=>!used.has(t.id));
-  if(!available.length){used.clear();available=pool}
-  const t=available[Math.floor(Math.random()*available.length)];
-  used.add(t.id);
-  loadRound(t,false);
-}
-function applyRoundPresentation(){
-  if(!current)return;
-  $("#answer").classList.remove("show");
-  $("#roundEra").textContent=`${current.era} · ${current.year}`;
-  if(settings.mode==="movie"){
-    $("#prompt").textContent="Name the movie";
-    $("#clue").className="clue";
-    $("#clue").textContent=current.song;
-    $("#artist").textContent=current.artist;
-  }else if(settings.mode==="song"){
-    $("#prompt").textContent="Name the song";
-    $("#clue").className="clue";
-    $("#clue").textContent=current.film;
-    $("#artist").textContent=`Film released ${current.year}`;
-  }else{
-    $("#prompt").textContent="Name the song and the movie";
-    $("#clue").className="clue hidden";
-    $("#clue").textContent=`Track ${String(round).padStart(2,"0")}`;
-    $("#artist").textContent="Song and movie concealed";
-  }
-  $("#answerFilm").innerHTML=`${esc(current.film)} <span class="answer-year">(${current.year})</span>`;
-  $("#answerSong").textContent=`${current.song} · ${current.artist}`;
-}
-function loadRound(track,autoplay){
-  stopAudio(true);
-  current=track;
-  round++;
-  used.add(track.id);
-  $("#footerRound").textContent=round;
-  $("#songSelectionLabel").textContent=track.song;
-  $("#revealBtn").disabled=false;
-  $("#replayBtn").disabled=false;
-  $("#roundStatus").textContent="Round Ready";
-  applyRoundPresentation();
-  configureAudio();
-  renderSongList();
-  closeAll();
-  if(autoplay)setTimeout(()=>playClip(true),80);
-}
-function configureAudio(){
-  const audio=$("#audio");
-  audio.pause();
-  audio.src=current?.audio_file||"";
-  audio.load();
-  elapsed=0;
-  resetProgress();
-  setAudioState("ready","Local Ready");
-}
-function setAudioState(state,label){
-  playback=state;
-  const box=$("#audioState");
-  box.className="audio-state";
-  if(state==="ready"||state==="paused"||state==="ended")box.classList.add("ready");
-  if(state==="playing")box.classList.add("playing");
-  if(state==="error")box.classList.add("error");
-  box.textContent=label||state.toUpperCase();
-
-  const btn=$("#playBtn");
-  btn.classList.toggle("playing",state==="playing");
-  if(!current){btn.disabled=true;btn.textContent="Play Song"}
-  else if(state==="playing"){btn.disabled=false;btn.textContent="Pause Song"}
-  else if(state==="paused"){btn.disabled=false;btn.textContent="Resume Song"}
-  else if(state==="ended"){btn.disabled=false;btn.textContent="Replay Song"}
-  else if(state==="error"){btn.disabled=false;btn.textContent="Try Again"}
-  else{btn.disabled=false;btn.textContent="Play Song"}
-}
-function playClip(restart){
-  if(!current)return;
-  clearTimeout(clipTimeout);clearInterval(timerId);
-  const audio=$("#audio");
-  const cue=Number(current.start_seconds)||0;
-  if(restart||playback==="ended"||playback==="error")elapsed=0;
-  try{audio.currentTime=cue+elapsed}catch(e){}
-  clipStartPerf=performance.now()-elapsed*1000;
-  const p=audio.play();
-  if(p&&typeof p.catch==="function"){
-    p.catch(()=>setAudioState("error","File Missing"));
-  }
-  setAudioState("playing","Playing");
-  $("#roundStatus").textContent="Music Playing";
-  timerId=setInterval(updateProgress,100);
-  clipTimeout=setTimeout(endClip,Math.max(0,settings.clipLength-elapsed)*1000);
-}
-function pauseAudio(){
-  if(playback!=="playing")return;
-  elapsed=Math.min(settings.clipLength,(performance.now()-clipStartPerf)/1000);
-  clearTimeout(clipTimeout);clipTimeout=null;
-  clearInterval(timerId);timerId=null;
-  $("#audio").pause();
-  updateProgress(true);
-  setAudioState("paused","Paused");
-  $("#roundStatus").textContent="Music Paused";
-}
-function endClip(){
-  elapsed=settings.clipLength;
-  clearTimeout(clipTimeout);clipTimeout=null;
-  clearInterval(timerId);timerId=null;
-  $("#audio").pause();
-  updateProgress(true);
-  setAudioState("ended","Clip Ended");
-  $("#roundStatus").textContent="Clip Complete";
-}
-function stopAudio(reset){
-  clearTimeout(clipTimeout);clipTimeout=null;
-  clearInterval(timerId);timerId=null;
-  const audio=$("#audio");audio.pause();
-  if(reset){
-    elapsed=0;resetProgress();
-    if(current)setAudioState("ready","Local Ready");else setAudioState("idle","No Track");
-  }
-}
-function togglePlay(){
-  if(!current)return;
-  if(playback==="playing")pauseAudio();
-  else if(playback==="paused")playClip(false);
-  else playClip(true);
-}
-function replayClip(){
-  if(!current)return;
-  stopAudio(true);
-  playClip(true);
-}
-function updateProgress(force){
-  let value=elapsed;
-  if(playback==="playing"&&!force)value=Math.min(settings.clipLength,(performance.now()-clipStartPerf)/1000);
-  $("#progressFill").style.width=`${Math.max(0,Math.min(100,value/settings.clipLength*100))}%`;
-  $("#timer").textContent=`${value.toFixed(1)}s`;
-}
-function resetProgress(){
-  $("#progressFill").style.width="0%";
-  $("#timer").textContent="0.0s";
-}
-function reveal(){
-  if(!current)return;
-  $("#answer").classList.add("show");
-  if(settings.mode==="both"){
-    $("#clue").className="clue";
-    $("#clue").textContent=current.song;
-    $("#artist").textContent=current.artist;
-  }
-  $("#roundStatus").textContent="Answer Revealed";
-}
-function changeScore(index,dir){
-  scores[index]+=settings.scoreStep*dir;
-  const el=$(`[data-score-display="${index}"]`);
-  if(el)el.textContent=scores[index];
-}
-
-function initSettingsModal(){
-  $("#contestantType").value=settings.contestantType;
-  $("#contestantCount").value=settings.contestantCount;
-  $("#clipLength").value=settings.clipLength;
-  $("#scoreStep").value=settings.scoreStep;
-  renderNameFields();
-}
-function saveSettingsFromModal(){
-  settings.contestantType=$("#contestantType").value;
-  settings.contestantCount=Number($("#contestantCount").value)||2;
-  settings.clipLength=Number($("#clipLength").value)||15;
-  settings.scoreStep=Number($("#scoreStep").value)||1;
-  for(let i=0;i<settings.contestantCount;i++){
-    const val=$(`#name${i}`)?.value.trim();
-    settings.names[i]=val||`${settings.contestantType==="team"?"Team":"Player"} ${i+1}`;
-  }
-  saveSettings();
-  renderHeaderState();
-  renderContestants();
-  closeModal("settingsModal");
-  if(current)stopAudio(true);
-}
-function saveMode(){
-  settings.mode=pendingMode;
-  saveSettings();
-  renderHeaderState();
-  applyRoundPresentation();
-  closeModal("modeModal");
-}
-function saveEra(){
-  settings.era=pendingEra;
-  used.clear();
-  saveSettings();
-  renderHeaderState();
-  closeModal("eraModal");
-}
-function resetScores(){
-  scores=Array(6).fill(0);
-  renderContestants();
-}
-
-function bind(){
-  $("#songsBtn").addEventListener("click",()=>{renderSongList();openModal("songsModal")});
-  $("#settingsBtn").addEventListener("click",()=>{initSettingsModal();openModal("settingsModal")});
-  $("#modeBtn").addEventListener("click",()=>{pendingMode=settings.mode;renderModeChoices();openModal("modeModal")});
-  $("#eraBtn").addEventListener("click",()=>{pendingEra=settings.era;renderEraChoices();openModal("eraModal")});
-  $("#fullBtn").addEventListener("click",()=>{
-    document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen?.();
-  });
-  $$("[data-close]").forEach(b=>b.addEventListener("click",()=>closeModal(b.dataset.close)));
-  $$(".modal-backdrop").forEach(back=>back.addEventListener("click",e=>{if(e.target===back)back.classList.remove("open")}));
-
-  $("#contestantCount").addEventListener("change",renderNameFields);
-  $("#contestantType").addEventListener("change",renderNameFields);
-  $("#saveSettingsBtn").addEventListener("click",saveSettingsFromModal);
-  $("#resetScoresBtn").addEventListener("click",resetScores);
-
-  $$("#modeChoices .choice").forEach(b=>b.addEventListener("click",()=>{pendingMode=b.dataset.mode;renderModeChoices()}));
-  $("#saveModeBtn").addEventListener("click",saveMode);
-
-  $$("#eraChoices .era-choice").forEach(b=>b.addEventListener("click",()=>{pendingEra=b.dataset.era;renderEraChoices()}));
-  $("#saveEraBtn").addEventListener("click",saveEra);
-
-  $("#songSearch").addEventListener("input",renderSongList);
-  $("#songEraFilter").addEventListener("change",renderSongList);
-  $("#songList").addEventListener("click",e=>{
-    const row=e.target.closest("[data-song-id]");if(!row)return;
-    const track=TRACKS.find(t=>t.id===row.dataset.songId);
-    if(track)loadRound(track,true);
-  });
-  $("#songList").addEventListener("keydown",e=>{
-    if((e.key==="Enter"||e.key===" ")&&e.target.closest("[data-song-id]")){
-      e.preventDefault();
-      const track=TRACKS.find(t=>t.id===e.target.closest("[data-song-id]").dataset.songId);
-      if(track)loadRound(track,true);
-    }
-  });
-
-  $("#nextBtn").addEventListener("click",chooseRandom);
-  $("#playBtn").addEventListener("click",togglePlay);
-  $("#replayBtn").addEventListener("click",replayClip);
-  $("#revealBtn").addEventListener("click",reveal);
-  $("#contestants").addEventListener("click",e=>{
-    const btn=e.target.closest("[data-score]");if(!btn)return;
-    changeScore(Number(btn.dataset.score),Number(btn.dataset.dir));
-  });
-
-  $("#audio").addEventListener("error",()=>setAudioState("error","File Missing"));
-  $("#audio").addEventListener("ended",()=>{if(playback==="playing")endClip()});
-
-  document.addEventListener("keydown",e=>{
-    const tag=document.activeElement?.tagName;
-    if(tag==="INPUT"||tag==="SELECT")return;
-    if(e.key==="Escape")closeAll();
-    if(e.code==="Space"){e.preventDefault();togglePlay()}
-    if(e.key.toLowerCase()==="n")chooseRandom();
-    if(e.key.toLowerCase()==="r")reveal();
-    if(e.key.toLowerCase()==="s")openModal("songsModal");
-  });
-}
-
-function init(){
-  renderHeaderState();
-  renderContestants();
-  renderSongList();
-  setAudioState("idle","No Track");
-  bind();
-}
-init();
-})();
-</script>
+  <script src="assets/js/site.js" defer></script>
 </body>
 </html>
